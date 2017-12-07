@@ -27,4 +27,5 @@ public:
 	CButton m_goBack;
 	afx_msg void OnBnClickedGoBack();
 	virtual void PostNcDestroy();
+	afx_msg void OnPaint();
 };

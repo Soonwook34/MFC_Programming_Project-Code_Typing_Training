@@ -5,7 +5,6 @@
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
 #define IDD_TYPINGTRAINING_FORM         101
-#define IDD_MAIN                        101
 #define IDD_SHORT                       102
 #define IDD_LONG                        103
 #define IDD_GAME                        104
