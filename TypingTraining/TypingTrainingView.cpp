@@ -8,7 +8,6 @@
 #ifndef SHARED_HANDLERS
 #include "TypingTraining.h"
 #endif
-#define IDD_TYPINGTRAINING_FORM IDD_MAIN
 
 #include "TypingTrainingDoc.h"
 #include "TypingTrainingView.h"
@@ -37,7 +36,7 @@ END_MESSAGE_MAP()
 // CTypingTrainingView 생성/소멸
 
 CTypingTrainingView::CTypingTrainingView()
-	: CFormView(IDD_MAIN)
+	: CFormView(IDD_TYPINGTRAINING_FORM)
 {
 	// TODO: 여기에 생성 코드를 추가합니다.
 	mode = IDD_LOGIN;
@@ -105,7 +104,7 @@ CTypingTrainingDoc* CTypingTrainingView::GetDocument() const // 디버그되지 않은 
 void CTypingTrainingView::OnDraw(CDC* pDC)
 {
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
-	if (mode != IDD_MAIN) {
+	if (mode != IDD_TYPINGTRAINING_FORM) {
 		m_goShort.ShowWindow(SW_HIDE);
 		m_goLong.ShowWindow(SW_HIDE);
 		m_goGame.ShowWindow(SW_HIDE);
@@ -119,7 +118,7 @@ void CTypingTrainingView::OnDraw(CDC* pDC)
 	}
 	
 	switch (mode) {
-	case IDD_MAIN:
+	case IDD_TYPINGTRAINING_FORM:
 		break;
 	case IDD_LOGIN:
 		if(m_pLogin == NULL) {
