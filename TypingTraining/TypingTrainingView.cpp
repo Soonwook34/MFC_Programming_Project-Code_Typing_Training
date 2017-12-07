@@ -8,9 +8,15 @@
 #ifndef SHARED_HANDLERS
 #include "TypingTraining.h"
 #endif
+#define IDD_TYPINGTRAINING_FORM IDD_MAIN
 
 #include "TypingTrainingDoc.h"
 #include "TypingTrainingView.h"
+#include "Login.h"
+#include "Short.h"
+#include "Long.h"
+#include "Game.h"
+#include "Info.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -22,15 +28,24 @@
 IMPLEMENT_DYNCREATE(CTypingTrainingView, CFormView)
 
 BEGIN_MESSAGE_MAP(CTypingTrainingView, CFormView)
+	ON_BN_CLICKED(IDC_GO_SHORT, &CTypingTrainingView::OnBnClickedGoShort)
+	ON_BN_CLICKED(IDC_GO_LONG, &CTypingTrainingView::OnBnClickedGoLong)
+	ON_BN_CLICKED(IDC_GO_GAME, &CTypingTrainingView::OnBnClickedGoGame)
+	ON_BN_CLICKED(IDC_GO_STATIC, &CTypingTrainingView::OnBnClickedGoStatic)
 END_MESSAGE_MAP()
 
 // CTypingTrainingView 생성/소멸
 
 CTypingTrainingView::CTypingTrainingView()
-	: CFormView(IDD_TYPINGTRAINING_FORM)
+	: CFormView(IDD_MAIN)
 {
 	// TODO: 여기에 생성 코드를 추가합니다.
-
+	mode = IDD_LOGIN;
+	m_pLogin = NULL;
+	m_pShort = NULL;
+	m_pLong = NULL;
+	m_pGame = NULL;
+	m_pInfo = NULL;
 }
 
 CTypingTrainingView::~CTypingTrainingView()
@@ -40,6 +55,10 @@ CTypingTrainingView::~CTypingTrainingView()
 void CTypingTrainingView::DoDataExchange(CDataExchange* pDX)
 {
 	CFormView::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_GO_SHORT, m_goShort);
+	DDX_Control(pDX, IDC_GO_LONG, m_goLong);
+	DDX_Control(pDX, IDC_GO_GAME, m_goGame);
+	DDX_Control(pDX, IDC_GO_STATIC, m_goStatic);
 }
 
 BOOL CTypingTrainingView::PreCreateWindow(CREATESTRUCT& cs)
@@ -81,3 +100,93 @@ CTypingTrainingDoc* CTypingTrainingView::GetDocument() const // 디버그되지 않은 
 
 
 // CTypingTrainingView 메시지 처리기
+
+
+void CTypingTrainingView::OnDraw(CDC* pDC)
+{
+	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
+	if (mode != IDD_MAIN) {
+		m_goShort.ShowWindow(SW_HIDE);
+		m_goLong.ShowWindow(SW_HIDE);
+		m_goGame.ShowWindow(SW_HIDE);
+		m_goStatic.ShowWindow(SW_HIDE);
+	}
+	else {
+		m_goShort.ShowWindow(SW_SHOW);
+		m_goLong.ShowWindow(SW_SHOW);
+		m_goGame.ShowWindow(SW_SHOW);
+		m_goStatic.ShowWindow(SW_SHOW);
+	}
+	
+	switch (mode) {
+	case IDD_MAIN:
+		break;
+	case IDD_LOGIN:
+		if(m_pLogin == NULL) {
+			m_pLogin = new CLogin(this);
+			m_pLogin->Create(IDD_LOGIN, this);
+			m_pLogin->ShowWindow(SW_SHOW);
+		}
+		break;
+	case IDD_SHORT:
+		if (m_pShort == NULL) {
+			m_pShort = new CShort(this);
+			m_pShort->Create(IDD_SHORT, this);
+			m_pShort->ShowWindow(SW_SHOW);
+		}
+		break;
+	case IDD_LONG:
+		if (m_pLong == NULL) {
+			m_pLong = new CLong(this);
+			m_pLong->Create(IDD_LONG, this);
+			m_pLong->ShowWindow(SW_SHOW);
+		}
+		break;
+	case IDD_GAME:
+		if (m_pGame == NULL) {
+			m_pGame = new CGame(this);
+			m_pGame->Create(IDD_GAME, this);
+			m_pGame->ShowWindow(SW_SHOW);
+		}
+		break;
+	case IDD_STATIC:
+		if (m_pInfo == NULL) {
+			m_pInfo = new CInfo(this);
+			m_pInfo->Create(IDD_STATIC, this);
+			m_pInfo->ShowWindow(SW_SHOW);
+		}
+		break;
+	}
+}
+
+
+void CTypingTrainingView::OnBnClickedGoShort()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	mode = IDD_SHORT;
+	Invalidate();
+}
+
+
+void CTypingTrainingView::OnBnClickedGoLong()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	mode = IDD_LONG;
+	Invalidate();
+}
+
+
+void CTypingTrainingView::OnBnClickedGoGame()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	mode = IDD_GAME;
+	Invalidate();
+}
+
+
+void CTypingTrainingView::OnBnClickedGoStatic()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	mode = IDD_STATIC;
+	Invalidate();
+}

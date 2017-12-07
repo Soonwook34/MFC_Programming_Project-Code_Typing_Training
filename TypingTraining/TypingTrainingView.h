@@ -3,7 +3,13 @@
 //
 
 #pragma once
-
+#include "afxwin.h"
+class CTypingTrainingDoc;
+class CLogin;
+class CShort;
+class CLong;
+class CGame;
+class CInfo;
 
 class CTypingTrainingView : public CFormView
 {
@@ -19,6 +25,12 @@ public:
 // 특성입니다.
 public:
 	CTypingTrainingDoc* GetDocument() const;
+	int mode;
+	CLogin* m_pLogin;
+	CShort* m_pShort;
+	CLong* m_pLong;
+	CGame* m_pGame;
+	CInfo* m_pInfo;
 
 // 작업입니다.
 public:
@@ -43,6 +55,16 @@ protected:
 // 생성된 메시지 맵 함수
 protected:
 	DECLARE_MESSAGE_MAP()
+	virtual void OnDraw(CDC* /*pDC*/);
+public:
+	CButton m_goShort;
+	CButton m_goLong;
+	CButton m_goGame;
+	CButton m_goStatic;
+	afx_msg void OnBnClickedGoShort();
+	afx_msg void OnBnClickedGoLong();
+	afx_msg void OnBnClickedGoGame();
+	afx_msg void OnBnClickedGoStatic();
 };
 
 #ifndef _DEBUG  // TypingTrainingView.cpp의 디버그 버전
