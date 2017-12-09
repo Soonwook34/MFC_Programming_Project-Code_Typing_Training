@@ -8,7 +8,7 @@
 #include "TypingTrainingDoc.h"
 #include "TypingTrainingView.h"
 
-
+//hi
 // CShort 대화 상자입니다.
 
 IMPLEMENT_DYNAMIC(CShort, CDialog)
