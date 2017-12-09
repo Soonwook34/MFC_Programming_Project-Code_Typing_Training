@@ -229,6 +229,8 @@ void CGame::OnPaint()
 	if (count == 10) {
 		finalrate.Format(_T("축하합니다! 총 %d 문제를 맞췄습니다!"), j);
 		AfxMessageBox(finalrate);
+		DestroyWindow();
+	//	return;
 	}
 	m_prob.SetWindowText(problem[i]);
 	m_num.SetWindowText(numberArr[i]);
