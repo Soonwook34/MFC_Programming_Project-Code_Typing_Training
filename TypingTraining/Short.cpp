@@ -8,6 +8,7 @@
 #include "TypingTrainingDoc.h"
 #include "TypingTrainingView.h"
 
+//abcdefg
 //hi
 // CShort 대화 상자입니다.
 
