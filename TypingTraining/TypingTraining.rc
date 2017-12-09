@@ -220,7 +220,7 @@ IDD_LONG DIALOGEX 0, 0, 334, 202
 STYLE DS_SETFONT | WS_CHILD
 FONT 16, "Consolas", 400, 0, 0x0
 BEGIN
-    LTEXT           "long",IDC_STATIC,33,45,93,9
+    LTEXT           "긴 코드 연습입니다",IDC_STATIC,33,45,93,9
     PUSHBUTTON      "Button1",IDC_GO_BACK,233,125,50,14
 END
 
