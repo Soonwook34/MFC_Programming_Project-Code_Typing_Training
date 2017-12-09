@@ -12,7 +12,11 @@ class CInfo : public CDialog
 public:
 	CInfo(CWnd* pParent = NULL);   // 표준 생성자입니다.
 	virtual ~CInfo();
-	
+	CString userid, userpw;
+	int game_sum, game_rsum;
+	CArray <int, int> typenum;
+	int letter_sum;
+	int letter_rsum;
 
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
