@@ -37,6 +37,20 @@
 #define IDC_QUESTION                    1017
 #define IDC_NUM                         1018
 #define IDC_STATIC1                     1020
+#define IDC_SPROGRESS                   1021
+#define IDC_SPRESENT                    1022
+#define IDC_PROGRESS                    1023
+#define IDC_PRESENT                     1024
+#define IDC_SBEST                       1025
+#define IDC_BEST                        1026
+#define IDC_SACCURACY                   1027
+#define IDC_ACCURACY                    1028
+#define IDC_COPY1                       1029
+#define IDC_STR2                        1030
+#define IDC_STR3                        1031
+#define IDC_STR4                        1032
+#define IDC_STR5                        1033
+#define IDC_BUTTON1                     1034
 
 // Next default values for new objects
 // 
@@ -44,7 +58,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        321
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1021
+#define _APS_NEXT_CONTROL_VALUE         1035
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif
