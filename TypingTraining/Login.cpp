@@ -7,6 +7,7 @@
 #include "afxdialogex.h"
 #include "TypingTrainingDoc.h"
 #include "TypingTrainingView.h"
+#include "Join.h"
 
 
 // CLogin 대화 상자입니다.
@@ -27,11 +28,15 @@ void CLogin::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_GO_MAIN, m_goMain);
+	DDX_Control(pDX, IDC_ID, m_edit_id);
+	DDX_Control(pDX, IDC_PW, m_edit_pw);
+	DDX_Control(pDX, IDC_JOIN, m_join);
 }
 
 
 BEGIN_MESSAGE_MAP(CLogin, CDialog)
 	ON_BN_CLICKED(IDC_GO_MAIN, &CLogin::OnBnClickedGoMain)
+	ON_BN_CLICKED(IDC_JOIN, &CLogin::OnBnClickedJoin)
 END_MESSAGE_MAP()
 
 
@@ -41,7 +46,32 @@ END_MESSAGE_MAP()
 void CLogin::OnBnClickedGoMain()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	DestroyWindow();
+	CString input_str;
+	m_edit_id.GetWindowText(str_id);
+	input_str += str_id;
+	input_str += _T(".");
+	m_edit_pw.GetWindowText(str_pw);
+	input_str += str_pw;
+
+	CStdioFile infofile;
+	CString written_str, str;
+	if (infofile.Open(_T("typinguserinfo.txt"), CFile::modeRead | CFile::typeText)) {
+		while (infofile.ReadString(str)) {
+			written_str += str;
+		}
+	}
+	//written_str.Replace(_T("\r\n"), _T(" "));
+	int n = written_str.Find(input_str);
+	if (input_str == _T("."))
+		MessageBox(_T("로그인 실패"));
+	else if (n >= 0) {
+		MessageBox(_T("로그인 성공"));
+		infofile.Close();
+		DestroyWindow();
+		//메인화면 다이얼로그 출현시키는 코드작성할 부분
+	}
+	else
+		MessageBox(_T("로그인 실패"));
 }
 
 
@@ -53,4 +83,12 @@ void CLogin::PostNcDestroy()
 	m_pMain->m_pLogin = NULL;
 	delete this;
 	CDialog::PostNcDestroy();
+}
+
+
+void CLogin::OnBnClickedJoin()
+{
+	CJoin join;
+	join.DoModal();
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 }

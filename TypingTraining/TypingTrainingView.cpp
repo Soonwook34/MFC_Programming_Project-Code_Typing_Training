@@ -31,6 +31,7 @@ BEGIN_MESSAGE_MAP(CTypingTrainingView, CFormView)
 	ON_BN_CLICKED(IDC_GO_LONG, &CTypingTrainingView::OnBnClickedGoLong)
 	ON_BN_CLICKED(IDC_GO_GAME, &CTypingTrainingView::OnBnClickedGoGame)
 	ON_BN_CLICKED(IDC_GO_STATIC, &CTypingTrainingView::OnBnClickedGoStatic)
+	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB, &CTypingTrainingView::OnTcnSelchangeTab)
 END_MESSAGE_MAP()
 
 // CTypingTrainingView 생성/소멸
@@ -58,6 +59,10 @@ void CTypingTrainingView::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_GO_LONG, m_goLong);
 	DDX_Control(pDX, IDC_GO_GAME, m_goGame);
 	DDX_Control(pDX, IDC_GO_STATIC, m_goStatic);
+	DDX_Control(pDX, IDC_TAB, m_tab);
+	DDX_Control(pDX, IDC_EXPLAIN, m_explain);
+	DDX_Control(pDX, IDC_USER, m_user);
+	DDX_Control(pDX, IDC_IMAGE, m_imgcanvas);
 }
 
 BOOL CTypingTrainingView::PreCreateWindow(CREATESTRUCT& cs)
@@ -74,6 +79,16 @@ void CTypingTrainingView::OnInitialUpdate()
 	GetParentFrame()->RecalcLayout();
 	ResizeParentToFit();
 
+	m_tab.InsertItem(0, _T("short"), 0);
+	m_tab.InsertItem(1, _T("long"), 0);
+	m_tab.InsertItem(2, _T("game"), 0);
+	m_tab.InsertItem(3, _T("static"), 0);
+
+	m_tab.SetCurSel(0);
+	m_explain.SetWindowTextW(_T("짧은 코드 연습\r\n코드 연습은 입력하는 빠르기에 따라\r\n현재 타수와 최고 타수가 실시간으로 나타납니다."));
+
+	//m_pLogin = new CLogin();
+	//str_userid = m_pLogin->str_id;
 }
 
 
@@ -109,12 +124,42 @@ void CTypingTrainingView::OnDraw(CDC* pDC)
 		m_goLong.ShowWindow(SW_HIDE);
 		m_goGame.ShowWindow(SW_HIDE);
 		m_goStatic.ShowWindow(SW_HIDE);
+		m_tab.ShowWindow(SW_HIDE);
+		m_explain.ShowWindow(SW_HIDE);
+		m_imgcanvas.ShowWindow(SW_HIDE);
+		//m_user.ShowWindow(SW_HIDE);
 	}
 	else {
 		m_goShort.ShowWindow(SW_SHOW);
 		m_goLong.ShowWindow(SW_SHOW);
 		m_goGame.ShowWindow(SW_SHOW);
 		m_goStatic.ShowWindow(SW_SHOW);
+		m_tab.ShowWindow(SW_SHOW);
+		m_explain.ShowWindow(SW_SHOW);
+		m_imgcanvas.ShowWindow(SW_SHOW);
+		//비트맵 이미지 넣기
+		CBitmap bitmap;
+		bitmap.LoadBitmapW(IDB_BITMAP1);
+		BITMAP bmpinfo;
+		bitmap.GetBitmap(&bmpinfo);
+
+		CDC memDC;
+		memDC.CreateCompatibleDC(m_imgcanvas.GetDC());
+		memDC.SelectObject(&bitmap);
+
+		CStatic *staticSize = (CStatic*)GetDlgItem(IDC_IMAGE);
+		CRect rect;
+		staticSize->GetClientRect(rect);
+		int iWidth = rect.Width();
+		int iHeight = rect.Height();
+		m_imgcanvas.GetDC()->StretchBlt(0, 0, iWidth, iHeight, &memDC, 0, 0, bmpinfo.bmWidth, bmpinfo.bmHeight, SRCCOPY);
+		
+		//m_user.ShowWindow(SW_SHOW);
+		//m_pLogin = new CLogin();
+		//str_userid = m_pLogin->str_id;
+		//SetDlgItemText(IDC_USER, str_userid);
+		
+
 	}
 	
 	switch (mode) {
@@ -188,4 +233,29 @@ void CTypingTrainingView::OnBnClickedGoStatic()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	mode = IDD_STATIC;
 	Invalidate();
+}
+
+
+void CTypingTrainingView::OnTcnSelchangeTab(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	int nIndex = m_tab.GetCurSel();
+	CString str;
+	if (nIndex == 0) {
+		str.Format(_T("짧은 코드 연습\r\n코드 연습은 입력하는 빠르기에 따라\r\n 현재 타수와 최고 타수가 실시간으로 나타납니다."));
+		m_explain.SetWindowText(str);
+	}
+	else if (nIndex == 1) {
+		str.Format(_T("긴 코드 연습\r\n코드 연습은 입력하는 빠르기에 따라\r\n 현재 타수와 최고 타수가 실시간으로 나타납니다."));
+		m_explain.SetWindowText(str);
+	}
+	else if (nIndex == 2) {
+		str.Format(_T("게임\r\n주어진 문제를 맞추면 맞은 개수가\r\n왼편에 나타납니다."));
+		m_explain.SetWindowText(str);
+	}
+	else if(nIndex == 3){
+		str.Format(_T("통계\r\n평균타수가 나타납니다."));
+		m_explain.SetWindowText(str);
+	}
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	*pResult = 0;
 }

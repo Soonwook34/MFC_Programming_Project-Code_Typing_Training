@@ -4,6 +4,7 @@
 
 #pragma once
 #include "afxwin.h"
+#include "afxcmn.h"
 class CTypingTrainingDoc;
 class CLogin;
 class CShort;
@@ -31,7 +32,8 @@ public:
 	CLong* m_pLong;
 	CGame* m_pGame;
 	CInfo* m_pInfo;
-
+	
+	CString str_userid;
 // 작업입니다.
 public:
 
@@ -65,6 +67,11 @@ public:
 	afx_msg void OnBnClickedGoLong();
 	afx_msg void OnBnClickedGoGame();
 	afx_msg void OnBnClickedGoStatic();
+	CTabCtrl m_tab;
+	CEdit m_explain;
+	afx_msg void OnTcnSelchangeTab(NMHDR *pNMHDR, LRESULT *pResult);
+	CStatic m_user;
+	CStatic m_imgcanvas;
 };
 
 #ifndef _DEBUG  // TypingTrainingView.cpp의 디버그 버전

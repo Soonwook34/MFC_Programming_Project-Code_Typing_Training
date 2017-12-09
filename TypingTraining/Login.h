@@ -12,7 +12,7 @@ class CLogin : public CDialog
 public:
 	CLogin(CWnd* pParent = NULL);   // 표준 생성자입니다.
 	virtual ~CLogin();
-
+	CString str_id, str_pw;
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_LOGIN };
@@ -27,4 +27,8 @@ public:
 	CButton m_goMain;
 	afx_msg void OnBnClickedGoMain();
 	virtual void PostNcDestroy();
+	CEdit m_edit_id;
+	CEdit m_edit_pw;
+	CButton m_join;
+	afx_msg void OnBnClickedJoin();
 };

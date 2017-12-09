@@ -187,6 +187,7 @@
   <ItemGroup>
     <ClInclude Include="Game.h" />
     <ClInclude Include="Info.h" />
+    <ClInclude Include="Join.h" />
     <ClInclude Include="Login.h" />
     <ClInclude Include="Long.h" />
     <ClInclude Include="MainFrm.h" />
@@ -201,6 +202,7 @@
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Info.cpp" />
+    <ClCompile Include="Join.cpp" />
     <ClCompile Include="Login.cpp" />
     <ClCompile Include="Long.cpp" />
     <ClCompile Include="MainFrm.cpp" />
@@ -222,6 +224,7 @@
     <None Include="res\TypingTraining.rc2" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="res\bitmap1.bmp" />
     <Image Include="res\Toolbar.bmp" />
     <Image Include="res\TypingTraining.ico" />
     <Image Include="res\TypingTrainingDoc.ico" />
