@@ -1,0 +1,50 @@
+math.h
+안녕하세요
+15
+32
+10
+1.234568
+&num
+cin
+cout
+scanf()
+printf()
+3.14
+//
+8
+int
+unsigned int
+float
+double
+bool
+%d
+%u
+%f
+%f
+%c
+4
+8
+1
+2
+int
+float
+없다
+void
+예
+예
+break;
+포인터
+int *num;
+&num;
+10
+0123456789
+2차원 배열
+%s
+주소값
+\n
+struct
+free
+포인터 배열
+배열 포인터
+fopen()
+fclose()
