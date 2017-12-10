@@ -5,6 +5,7 @@
 // CInfo 대화 상자입니다.
 class CTypingTrainingView;
 
+
 class CInfo : public CDialog
 {
 	DECLARE_DYNAMIC(CInfo)
@@ -32,4 +33,12 @@ public:
 	CButton m_goBack;
 	afx_msg void OnBnClickedGoBack();
 	virtual void PostNcDestroy();
+	CEdit m_edit_userid;
+	CEdit m_edit_average;
+	CEdit m_edit_accuracy;
+	CEdit m_edit_exact;
+	CButton m_dropout;
+	virtual BOOL OnInitDialog();
+	afx_msg void OnPaint();
+	afx_msg void OnBnClickedDropout();
 };
