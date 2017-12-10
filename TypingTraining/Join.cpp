@@ -35,10 +35,14 @@ void CJoin::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_NewID, str_newid);
 	DDX_Text(pDX, IDC_NewPW, str_newpw);
 	DDX_Text(pDX, IDC_ConfirmPW, str_cfpw);
+	DDX_Control(pDX, IDC_ISEXIST, m_isexist);
 }
 
 
 BEGIN_MESSAGE_MAP(CJoin, CDialog)
+	ON_BN_CLICKED(IDC_ISEXIST, &CJoin::OnBnClickedIsexist)
+	ON_EN_UPDATE(IDC_NewID, &CJoin::OnEnUpdateNewid)
+	ON_EN_UPDATE(IDC_NewPW, &CJoin::OnEnUpdateNewpw)
 END_MESSAGE_MAP()
 
 
@@ -66,17 +70,111 @@ void CJoin::OnOK()
 		m_edit_newpw.SetFocus();
 		return;
 	}
+	
+	if (isexist_click == FALSE) {
+		MessageBox(_T("아이디 중복확인을 하세요."));
+	}
 	else {
+		
 		CStdioFile infofile;
 		if (infofile.Open(_T("typinguserinfo.txt"), CFile::modeCreate | CFile::modeNoTruncate | CFile::modeReadWrite | CFile::typeText))
 		{
 			infofile.SeekToEnd();
 			infofile.WriteString(_T("\n"));
-			infofile.WriteString(str_newid + _T(".")+str_newpw);
+			infofile.WriteString(_T("*")+str_newid + _T(".")+str_newpw);
+			MessageBox(_T("회원가입 완료"));
+			infofile.Close();
 		}
-		MessageBox(_T("회원가입 완료"));
 		
 	}
 
 	CDialog::OnOK();
+}
+
+
+void CJoin::OnBnClickedIsexist()
+{
+	isexist_click = TRUE;
+	
+	CStdioFile infofile;
+	CString written_str, str;
+	if (infofile.Open(_T("typinguserinfo.txt"), CFile::modeRead | CFile::typeText)){
+		while (infofile.ReadString(str))
+			written_str += str;
+		CString checkid;
+		checkid += _T("*");
+		checkid += str_newid;
+		checkid +=_T(".");
+		//MessageBox(checkid);
+		int n = written_str.Find(checkid);
+		if (n < 0) {
+			MessageBox(_T("사용가능한 아이디입니다."));
+			//m_edit_newpw.SetFocus();
+		}
+		else
+			MessageBox(_T("사용불가능한 아이디입니다. 다시 입력해주세요."));
+	}
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CJoin::OnEnUpdateNewid()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialog::OnInitDialog() 함수를 재지정 
+	//하여, IParam 마스크에 OR 연산하여 설정된 ENM_SCROLL 플래그를 지정하여 컨트롤에 EM_SETEVENTMASK 메시지를 보내지 않으면
+	// 편집 컨트롤이 바뀐 텍스트를 표시하려고 함을 나타냅니다.
+	UpdateData(TRUE);
+	
+	TCHAR* tchr;
+	CString forid = _T("");
+	int i;
+
+	for (i = 0; i < str_newid.GetLength(); i++) {
+		forid = str_newid.Mid(i, 1);
+		//문자열을 문자로 변환
+		tchr = (TCHAR*)(LPCTSTR)forid;
+
+		if (!IsCharAlphaNumericA(*tchr)) {
+			MessageBox(_T("숫자나 알파벳을 입력해야 합니다."));
+			str_newid.Remove(*tchr);
+		}
+	}
+	UpdateData(FALSE);
+	m_edit_newid.SetSel(0, -1);
+	m_edit_newid.SetSel(-1, -1);
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CJoin::OnEnUpdateNewpw()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialog::OnInitDialog() 함수를 재지정 
+	//하여, IParam 마스크에 OR 연산하여 설정된 ENM_SCROLL 플래그를 지정하여 컨트롤에 EM_SETEVENTMASK 메시지를 보내지 않으면
+	// 편집 컨트롤이 바뀐 텍스트를 표시하려고 함을 나타냅니다.
+	UpdateData(TRUE);
+
+	TCHAR* tchr;
+	CString forpw = _T("");
+	int i;
+
+	for (i = 0; i < str_newpw.GetLength(); i++) {
+		forpw = str_newpw.Mid(i, 1);
+		//문자열을 문자로 변환
+		tchr = (TCHAR*)(LPCTSTR)forpw;
+
+		int asc = 0;
+		asc = __toascii(*tchr);
+
+		if ((asc==46)|(asc==42)) {
+			MessageBox(_T("입력할 수 없는 문자입니다."));
+			str_newpw.Remove(*tchr);
+		}
+	}
+	UpdateData(FALSE);
+	m_edit_newid.SetSel(0, -1);
+	m_edit_newid.SetSel(-1, -1);
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
 }

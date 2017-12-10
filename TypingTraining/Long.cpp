@@ -24,9 +24,16 @@ CLong::CLong(CWnd* pParent /*=NULL*/)
 	blue = RGB(50, 25, 225);
 	black = RGB(0, 0, 0);
 	speedCnt = 0;
+	speedSum = 0;
 	correctChar = 0;
 	totalChar = 0;
 	curPage = 0;
+	start = FALSE;
+	time = 0;
+	tempTotal = 0;
+	tempCorrect = 0;
+	bestSpeed = 0;
+	typeIndex = 0;
 }
 
 CLong::~CLong()
@@ -47,12 +54,19 @@ void CLong::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT3, m_edit3);
 	DDX_Control(pDX, IDC_EDIT4, m_edit4);
 	DDX_Control(pDX, IDC_EDIT5, m_edit5);
+	DDX_Control(pDX, IDC_BESTSPEED, m_bestSpeed);
 }
 
 
 BEGIN_MESSAGE_MAP(CLong, CDialog)
 	ON_BN_CLICKED(IDC_GO_BACK, &CLong::OnBnClickedGoBack)
 	ON_WM_PAINT()
+	ON_EN_CHANGE(IDC_EDIT1, &CLong::OnEnChangeEdit1)
+	ON_EN_CHANGE(IDC_EDIT2, &CLong::OnEnChangeEdit2)
+	ON_EN_CHANGE(IDC_EDIT3, &CLong::OnEnChangeEdit3)
+	ON_EN_CHANGE(IDC_EDIT4, &CLong::OnEnChangeEdit4)
+	ON_EN_CHANGE(IDC_EDIT5, &CLong::OnEnChangeEdit5)
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 
@@ -93,6 +107,9 @@ void CLong::OnPaint()
 	dc.TextOut(point.x, point.y, _T("asdf"));
 	strNum = (curPage - 1) * 5;
 	for (i = 0; i < 5; i++) {
+		if ((curPage - 1) * 5 + i - 1 > fileStr.GetCount()) {
+			break;
+		}
 		for (k = 0; k < check[i].GetLength(); k++) {
 			c = fileStr[strNum + i].GetAt(k);
 			cc = check[i].GetAt(k);
@@ -150,6 +167,10 @@ BOOL CLong::OnInitDialog()
 		}
 		else {
 			totalPage = fileStr.GetCount() / 5 + 1;
+			int tempPage = fileStr.GetCount() % 5;
+			for (; tempPage < 5; tempPage++) {
+				fileStr.Add(_T(""));
+			}
 		}
 		m_fileName.SetWindowText(fileName);
 		InitLongCode();
@@ -173,26 +194,345 @@ BOOL CLong::OnInitDialog()
 		for (int i = 0; i < 5; i++) {
 			check[i].Empty();
 		}
+		m_edit1.SetWindowText(_T(""));
+		m_edit2.SetWindowText(_T(""));
+		m_edit3.SetWindowText(_T(""));
+		m_edit4.SetWindowText(_T(""));
+		m_edit5.SetWindowText(_T(""));
+		m_edit1.EnableWindow(TRUE);
+		m_edit1.SetFocus();
+		m_edit2.EnableWindow(FALSE);
+		m_edit3.EnableWindow(FALSE);
+		m_edit4.EnableWindow(FALSE);
+		m_edit5.EnableWindow(FALSE);
+		IsTyping = 1;
 		Invalidate(0);
 	}
 
 
 	void CLong::OnTyping(CString type, int index, int strNum)
 	{
-		CString now;
-		int currentPos = type.GetLength() - 1;
-		if (type.GetLength() < check[index].GetLength()) {
-			check[index].Delete(currentPos + 1, 1);
-		}
-		else {
-			now = type.GetAt(currentPos);
-			if (now == fileStr[strNum].GetAt(currentPos)) {
+		CString right = _T("0"), wrong = _T("1"), accuracy;
+		int currentPos = type.GetLength() - 1, curCorrect = 0, curTotal = 0;
+		if (check[index].GetLength() < type.GetLength()) {
+			if(type.GetAt(currentPos) == fileStr[strNum].GetAt(currentPos))
 				speedCnt++;
-				check[index].Format(_T("%s%c"), check[index], _T('0'));
+		}
+		check[index].Empty();
+		for (int i = 0; i < type.GetLength(); i++) {
+			if (fileStr[strNum][i] == type[i]) {
+				check[index].Append(right);
+				curCorrect++;
 			}
 			else {
-				check[index].Format(_T("%s%c"), check[index], _T('1'));
+				check[index].Append(wrong);
 			}
+			curTotal++;
+		}
+		if (type.GetLength() != 0) {
+			tempTotal = totalChar + curTotal;
+			tempCorrect = correctChar + curCorrect;
+		}
+		if (tempTotal != 0) {
+			accuracy.Format(_T("%d%%"), (int)((float)tempCorrect / (float)tempTotal * 100));
+			m_accuracy.SetWindowText(accuracy);
 		}
 		Invalidate(0);
+	}
+
+
+	void CLong::OnEnChangeEdit1()
+	{
+		// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+		// CDialog::OnInitDialog() 함수를 재지정 
+		//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+		// 이 알림 메시지를 보내지 않습니다.
+
+		// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+		CString type;
+		m_edit1.GetWindowText(type);
+		if (!start && type.GetLength()) {
+			SetTimer(1210, 200, NULL);
+			start = TRUE;
+		}
+		int strNum = (curPage - 1) * 5;
+		OnTyping(type, 0, strNum);
+	}
+
+
+	void CLong::OnEnChangeEdit2()
+	{
+		// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+		// CDialog::OnInitDialog() 함수를 재지정 
+		//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+		// 이 알림 메시지를 보내지 않습니다.
+
+		// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+		int strNum = (curPage - 1) * 5 + 1;
+		CString type;
+		m_edit2.GetWindowText(type);
+		OnTyping(type, 1, strNum);
+	}
+
+
+	void CLong::OnEnChangeEdit3()
+	{
+		// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+		// CDialog::OnInitDialog() 함수를 재지정 
+		//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+		// 이 알림 메시지를 보내지 않습니다.
+
+		// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+		int strNum = (curPage - 1) * 5 + 2;
+		CString type;
+		m_edit3.GetWindowText(type);
+		OnTyping(type, 2, strNum);
+	}
+
+
+	void CLong::OnEnChangeEdit4()
+	{
+		// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+		// CDialog::OnInitDialog() 함수를 재지정 
+		//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+		// 이 알림 메시지를 보내지 않습니다.
+
+		// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+		int strNum = (curPage - 1) * 5 + 3;
+		CString type;
+		m_edit4.GetWindowText(type);
+		OnTyping(type, 3, strNum);
+	}
+
+
+	void CLong::OnEnChangeEdit5()
+	{
+		// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+		// CDialog::OnInitDialog() 함수를 재지정 
+		//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+		// 이 알림 메시지를 보내지 않습니다.
+
+		// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+		int strNum = (curPage - 1) * 5 + 4;
+		CString type;
+		m_edit5.GetWindowText(type);
+		OnTyping(type, 4, strNum);
+	}
+
+
+	BOOL CLong::PreTranslateMessage(MSG* pMsg)
+	{
+		// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
+		if (pMsg->message == WM_KEYDOWN && pMsg->wParam == 53) {
+			if (GetKeyState(VK_SHIFT) < 0) {
+				CString str, percent = _T("%");
+				switch (IsTyping) {
+				case 1:
+					m_edit1.GetWindowText(str);
+					str.Append(percent);
+					m_edit1.SetSel(0, -1);
+					m_edit1.ReplaceSel(str);
+					m_edit1.SetFocus();
+					break;
+				case 2:
+					m_edit2.GetWindowText(str);
+					str.Append(percent);
+					m_edit2.SetSel(0, -1);
+					m_edit2.ReplaceSel(str);
+					m_edit2.SetFocus();
+					break;
+				case 3:
+					m_edit3.GetWindowText(str);
+					str.Append(percent);
+					m_edit3.SetSel(0, -1);
+					m_edit3.ReplaceSel(str);
+					m_edit3.SetFocus();
+					break;
+				case 4:
+					m_edit4.GetWindowText(str);
+					str.Append(percent);
+					m_edit4.SetSel(0, -1);
+					m_edit4.ReplaceSel(str);
+					m_edit4.SetFocus();
+					break;
+				case 5:
+					m_edit5.GetWindowText(str);
+					str.Append(percent);
+					m_edit5.SetSel(0, -1);
+					m_edit5.ReplaceSel(str);
+					m_edit5.SetFocus();
+					break;
+				}
+				return true;
+			}
+		}
+		switch (pMsg->wParam) {
+		case VK_ESCAPE:
+		case VK_LEFT:
+		case VK_RIGHT:
+		case VK_TAB:
+			return true;
+		case VK_RETURN:
+			switch (IsTyping) {
+			case 1:
+				if (check[0].GetLength() == fileStr[(curPage - 1) * 5].GetLength()) {
+					totalChar = tempTotal;
+					correctChar = tempCorrect;
+					tempTotal = 0;
+					tempCorrect = 0;
+					if (fileStr[(curPage - 1) * 5 + 1].GetLength() == 0) {
+						ShowFinalResult();
+						return true;
+					}
+					m_edit1.EnableWindow(FALSE);
+					m_edit2.EnableWindow(TRUE);
+					m_edit2.SetFocus();
+					IsTyping = 2;
+				}
+				break;
+			case 2:
+				if (check[1].GetLength() == fileStr[(curPage - 1) * 5 + 1].GetLength()) {
+					totalChar = tempTotal;
+					correctChar = tempCorrect;
+					tempTotal = 0;
+					tempCorrect = 0;
+					if (fileStr[(curPage - 1) * 5 + 2].GetLength() == 0) {
+						ShowFinalResult();
+						return true;
+					}
+					m_edit2.EnableWindow(FALSE);
+					m_edit3.EnableWindow(TRUE);
+					m_edit3.SetFocus();
+					IsTyping = 3;
+				}
+				break;
+			case 3:
+				if (check[2].GetLength() == fileStr[(curPage - 1) * 5 + 2].GetLength()) {
+					totalChar = tempTotal;
+					correctChar = tempCorrect;
+					tempTotal = 0;
+					tempCorrect = 0;
+					if (fileStr[(curPage - 1) * 5 + 3].GetLength() == 0) {
+						ShowFinalResult();
+						return true;
+					}
+					m_edit3.EnableWindow(FALSE);
+					m_edit4.EnableWindow(TRUE);
+					m_edit4.SetFocus();
+					IsTyping = 4;
+				}
+				break;
+			case 4:
+				if (check[3].GetLength() == fileStr[(curPage - 1) * 5 + 3].GetLength()) {
+					totalChar = tempTotal;
+					correctChar = tempCorrect;
+					tempTotal = 0;
+					tempCorrect = 0;
+					if (fileStr[(curPage - 1) * 5 + 4].GetLength() == 0) {
+						ShowFinalResult();
+						return true;
+					}
+					m_edit4.EnableWindow(FALSE);
+					m_edit5.EnableWindow(TRUE);
+					m_edit5.SetFocus();
+					IsTyping = 5;
+				}
+				break;
+			case 5:
+				if (check[4].GetLength() == fileStr[(curPage - 1) * 5 + 4].GetLength()) {
+					totalChar = tempTotal;
+					correctChar = tempCorrect;
+					tempTotal = 0;
+					tempCorrect = 0;
+					if (curPage == totalPage) {
+						ShowFinalResult();
+						return true;
+					}
+					InitLongCode();
+				}
+				break;
+			default:
+				return true;
+			}
+			return true;
+		}
+		if (GetDlgItem(IDC_EDIT1)->m_hWnd == pMsg->hwnd && pMsg->message == WM_LBUTTONDOWN)
+			return TRUE;
+		else if (GetDlgItem(IDC_EDIT1)->m_hWnd == pMsg->hwnd && pMsg->message == WM_MBUTTONDOWN)
+			return TRUE;
+		else if (GetDlgItem(IDC_EDIT1)->m_hWnd == pMsg->hwnd && pMsg->message == WM_RBUTTONDOWN)
+			return TRUE;
+		else if (GetDlgItem(IDC_EDIT2)->m_hWnd == pMsg->hwnd && pMsg->message == WM_LBUTTONDOWN)
+			return TRUE;
+		else if (GetDlgItem(IDC_EDIT2)->m_hWnd == pMsg->hwnd && pMsg->message == WM_MBUTTONDOWN)
+			return TRUE;
+		else if (GetDlgItem(IDC_EDIT2)->m_hWnd == pMsg->hwnd && pMsg->message == WM_RBUTTONDOWN)
+			return TRUE;
+		else if (GetDlgItem(IDC_EDIT3)->m_hWnd == pMsg->hwnd && pMsg->message == WM_LBUTTONDOWN)
+			return TRUE;
+		else if (GetDlgItem(IDC_EDIT3)->m_hWnd == pMsg->hwnd && pMsg->message == WM_MBUTTONDOWN)
+			return TRUE;
+		else if (GetDlgItem(IDC_EDIT3)->m_hWnd == pMsg->hwnd && pMsg->message == WM_RBUTTONDOWN)
+			return TRUE;
+		else if (GetDlgItem(IDC_EDIT4)->m_hWnd == pMsg->hwnd && pMsg->message == WM_LBUTTONDOWN)
+			return TRUE;
+		else if (GetDlgItem(IDC_EDIT4)->m_hWnd == pMsg->hwnd && pMsg->message == WM_MBUTTONDOWN)
+			return TRUE;
+		else if (GetDlgItem(IDC_EDIT4)->m_hWnd == pMsg->hwnd && pMsg->message == WM_RBUTTONDOWN)
+			return TRUE;
+		else if (GetDlgItem(IDC_EDIT5)->m_hWnd == pMsg->hwnd && pMsg->message == WM_LBUTTONDOWN)
+			return TRUE;
+		else if (GetDlgItem(IDC_EDIT5)->m_hWnd == pMsg->hwnd && pMsg->message == WM_MBUTTONDOWN)
+			return TRUE;
+		else if (GetDlgItem(IDC_EDIT5)->m_hWnd == pMsg->hwnd && pMsg->message == WM_RBUTTONDOWN)
+			return TRUE;
+		return CDialog::PreTranslateMessage(pMsg);
+	}
+
+
+	void CLong::ShowFinalResult()
+	{
+		CString timer;
+		KillTimer(1210);
+		int totalSpeed = (int)((float)correctChar / (float)time * 600);
+		timer.Format(_T("걸린 시간 > %d : %d\n평균 타수 > %d타/min\n최고 타수 > %d타/min\n정확도 > %d%%"), time / 600, (time % 600) / 10, totalSpeed, bestSpeed, (int)((float)correctChar / (float)totalChar * 100));
+		AfxMessageBox(timer);
+		DestroyWindow();
+		return;
+	}
+
+
+	void CLong::OnTimer(UINT_PTR nIDEvent)
+	{
+		// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+		switch (nIDEvent) {
+		case 1210:
+			time += 2;
+			if (time % 10 == 0) {
+				CString timer;
+				timer.Format(_T("%d : %d"), time/600, (time%600)/10);
+				m_time.SetWindowText(timer);
+			}
+			if (typeIndex < 300) {
+				speed.Add(speedCnt);
+				speedSum += speedCnt;
+			}
+			else {
+				speedSum -= speed[typeIndex % 300];
+				speed[typeIndex % 300] = speedCnt;
+				speedSum += speedCnt;
+			}
+			speedCnt = 0;
+			typeIndex++;
+			typeIndex %= 301;
+			int curSpeed = speedSum * 300 / typeIndex;
+			CString strSpeed;
+			strSpeed.Format(_T("%d타"), curSpeed);
+			if (curSpeed > bestSpeed) {
+				bestSpeed = curSpeed;
+				m_bestSpeed.SetWindowText(strSpeed);
+			}
+			m_speed.SetWindowText(strSpeed);
+		}
+		CDialog::OnTimer(nIDEvent);
 	}

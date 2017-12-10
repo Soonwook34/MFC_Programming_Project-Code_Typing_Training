@@ -11,7 +11,7 @@ class CJoin : public CDialog
 public:
 	CJoin(CWnd* pParent = NULL);   // 표준 생성자입니다.
 	virtual ~CJoin();
-
+	BOOL isexist_click = FALSE;
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_JOIN };
@@ -29,4 +29,8 @@ public:
 	CString str_newpw;
 	CString str_cfpw;
 	virtual void OnOK();
+	CButton m_isexist;
+	afx_msg void OnBnClickedIsexist();
+	afx_msg void OnEnUpdateNewid();
+	afx_msg void OnEnUpdateNewpw();
 };

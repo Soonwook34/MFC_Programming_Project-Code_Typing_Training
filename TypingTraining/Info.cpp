@@ -107,7 +107,7 @@ BOOL CInfo::OnInitDialog()
 void CInfo::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
-	/*				   
+					   
 	//그래프 그릴 공간 색 지정
 	CRect rect;
 	GetClientRect(rect);
@@ -116,6 +116,7 @@ void CInfo::OnPaint()
 	CRect m_graph_rect(m_rect.left + 50, m_rect.top, m_rect.right, m_rect.bottom - 40);
 	dc.FillSolidRect(m_graph_rect, RGB(250, 244, 192));
 
+	/*
 	//폰트색상,배경색 그리고 펜색상 지정
 	CFont font;
 	font.CreatePointFont(100, _T("Consolas"));
