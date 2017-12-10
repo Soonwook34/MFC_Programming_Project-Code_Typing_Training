@@ -65,6 +65,7 @@
 #define IDC_TIME                        1047
 #define IDC_FILENAME                    1048
 #define IDC_DROPOUT                     1049
+#define IDC_BESTSPEED                   1049
 #define IDC_USERID                      1050
 #define IDC_AVERAGE                     1051
 #define IDC_EXACT                       1052
