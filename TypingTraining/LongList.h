@@ -32,4 +32,5 @@ public:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedStart();
 	afx_msg void OnBnClickedAdd();
+	virtual void OnCancel();
 };

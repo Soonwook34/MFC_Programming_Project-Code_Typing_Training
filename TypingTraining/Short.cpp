@@ -516,9 +516,13 @@ void CShort::OnTimer(UINT_PTR nIDEvent)
 
 void CShort::OnPaint()
 {
+	/*
 	CPaintDC dc(this); // device context for painting
 					   // TODO: 여기에 메시지 처리기 코드를 추가합니다.
 					   // 그리기 메시지에 대해서는 CDialog::OnPaint()을(를) 호출하지 마십시오.
+	CRect rect;
+	GetWindowRect(&rect);
+	ScreenToClient(&rect);
 	CDC* pDC = GetDC();
 	COLORREF red = RGB(255, 50, 25), blue = RGB(50, 25, 255), black = RGB(0, 0, 0);
 	CPoint point = CPoint(35, 150);
@@ -539,5 +543,37 @@ void CShort::OnPaint()
 			pDC->SetTextColor(black);
 		pDC->TextOut(point.x, point.y, tmp);
 		point.x += 11;
+	}
+	*/
+
+	CPaintDC dc(this); // device context for painting
+					   // TODO: 여기에 메시지 처리기 코드를 추가합니다.
+					   // 그리기 메시지에 대해서는 CDialog::OnPaint()을(를) 호출하지 마십시오.
+	CDC* pDC = GetDC();
+	CRect rect;
+	GetClientRect(&rect);
+	pDC->SetMapMode(MM_ANISOTROPIC);
+	pDC->SetWindowExt(752, 480);
+	pDC->SetViewportExt(rect.Width(), rect.Height());
+	COLORREF red = RGB(255, 50, 25), blue = RGB(50, 25, 255), black = RGB(0, 0, 0);
+	CPoint point = CPoint(31, 135);
+	CFont font;
+	//font.CreatePointFont(120, _T("Consolas"));
+	font.CreateFont(19, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Consolas"));
+
+	CString tmp;
+
+	pDC->SelectObject(&font);
+
+	for (int i = 0; i < str1.GetLength(); i++) {
+		tmp.Format(_T("%c"), str1[i]);
+		if (col[i] == 1)
+			pDC->SetTextColor(blue);
+		else if (col[i] == 0)
+			pDC->SetTextColor(red);
+		else
+			pDC->SetTextColor(black);
+		pDC->TextOut(point.x, point.y, tmp);
+		point.x += 9;
 	}
 }
