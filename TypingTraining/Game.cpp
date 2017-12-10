@@ -8,6 +8,7 @@
 #include "TypingTrainingDoc.h"
 #include "TypingTrainingView.h"
 #include "locale.h"
+#include "Info.h"
 
 
 // CGame 대화 상자입니다.
@@ -234,11 +235,16 @@ void CGame::OnPaint()
 		finalrate.Format(_T("축하합니다! 총 %d 문제를 맞췄습니다!"), j);
 		AfxMessageBox(finalrate);
 		AfxMessageBox(_T("맞은 개수는 통계에 기록됩니다!"));
+		
+		info.game_rsum = rate;
+		info.game_sum = count;
+
+
 		//::SendMessage(this->m_hWnd, WM_CLOSE, NULL, NULL);	//에러
 		//OnClose();		//나가지지 않고 에러
 		//::PostQuitMessage(WM_QUIT);	//아예 윈도우 종료
 		//PostNcDestroy();	//에러
-		//DestroyWindow();	//에러
+	//	DestroyWindow();	//에러
 		m_enter.EnableWindow(FALSE);
 		return;		//윈도우 안나가짐
 	}
