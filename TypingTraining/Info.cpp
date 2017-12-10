@@ -92,9 +92,9 @@ BOOL CInfo::OnInitDialog()
 	str_average.Format(_T("%d타"), average);
 	m_edit_average.SetWindowText(str_average);
 	
-	int accuracy = (letter_rsum / letter_sum) * 100;
+	int accuracy = (letter_rsum*100 )/ letter_sum;
 	CString str_accuracy;
-	str_accuracy.Format(_T("%d"), accuracy);
+	str_accuracy.Format(_T("%d퍼센트"), accuracy);
 	m_edit_accuracy.SetWindowTextW(str_accuracy);
 	/*
 	double exact = (game_rsum / game_sum) * 100;
@@ -120,7 +120,7 @@ void CInfo::OnPaint()
 	CRect m_graph_rect(m_rect.left + 50, m_rect.top, m_rect.right, m_rect.bottom - 40);
 	dc.FillSolidRect(m_graph_rect, RGB(250, 244, 192));
 
-	/*
+	
 	//폰트색상,배경색 그리고 펜색상 지정
 	CFont font;
 	font.CreatePointFont(100, _T("Consolas"));
@@ -129,10 +129,17 @@ void CInfo::OnPaint()
 	dc.SetBkColor(RGB(255, 255, 255));
 	CPen line_pen(PS_SOLID, 2, RGB(0, 0, 0));
 
+	int m_v_count = 6;
+	int m_value_count = 10;
+	int count = typenum.GetCount();
+	if (count <= 10)
+		m_value_count = count;
+	else
+		m_value_count = 10;
 	//y축 눈금이랑 눈금숫자 표시
-	int v_step = m_graph_rect.Height() / (6 + 1); //y좌표 눈금당 좌표 높이
+	int v_step = m_graph_rect.Height() / (m_v_count + 1); //y좌표 눈금당 좌표 높이
 	int y_pos = 0;
-	int v_scale_value = 600 / (6 - 1); //y좌표 눈금당 수치값
+	int v_scale_value = 600 / (m_v_count - 1); //y좌표 눈금당 수치값
 	int i;
 	for (i = 0; i < 6; i++) {
 		dc.SelectObject(&line_pen);
@@ -148,11 +155,11 @@ void CInfo::OnPaint()
 	}
 	//y좌표 시작과 끝
 	int y_start = m_graph_rect.top + v_step;
-	int y_end = m_graph_rect.top + v_step * 6;
+	int y_end = m_graph_rect.top + v_step * m_v_count;
 
-	int h_step = m_graph_rect.Width() / (10 + 1); // x좌표 눈금당 좌표 높이
+	int h_step = m_graph_rect.Width() / (m_value_count + 1); // x좌표 눈금당 좌표 높이
 	int x_pos = 0;
-	for (i = 0; i < 10; i++) {
+	for (i = 0; i < m_value_count; i++) {
 		dc.SelectObject(&line_pen);
 		x_pos = m_graph_rect.left + h_step*(i + 1);
 		//x축 눈금 그리기
@@ -167,18 +174,20 @@ void CInfo::OnPaint()
 
 	//데이터 그래프 그리기
 	dc.SelectObject(&line_pen);
-	for (i = 0; i < 10; i++) {
+	for (i = 0; i < m_value_count; i++) {
 		// x좌표를 설정
 		x_pos = m_graph_rect.left + h_step*(i + 1);
 		y_pos = y_start + (y_end - y_start)*(600 - typenum.GetAt(i)) / 600;
 
 
 		// 첫번째 데이터의 경우 MoveTo를 하고
-		if (i == 0) dc.MoveTo(int(x_pos), int(y_pos));
+		if (i == 0) 
+			dc.MoveTo(int(x_pos), int(y_pos));
 		// 나머지 데이터는 LineTo로 그린다.
-		else dc.LineTo(int(x_pos), int(y_pos));
+		else 
+			dc.LineTo(int(x_pos), int(y_pos));
 	}
-
+	/*
 	//데이터 원 그리는 코드
 	CBrush brush(RGB(0, 0, 255));
 	for (i = 0; i<10; i++) {
