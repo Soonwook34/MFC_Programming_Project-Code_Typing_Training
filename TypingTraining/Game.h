@@ -1,5 +1,6 @@
 #pragma once
 #include "afxwin.h"
+#include "Info.h"
 
 
 // CGame 대화 상자입니다.
@@ -49,4 +50,5 @@ public:
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	CString m_str;
 	CButton m_enter;
+	CInfo info;
 };
