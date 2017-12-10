@@ -14,10 +14,10 @@ public:
 	CInfo(CWnd* pParent = NULL);   // 표준 생성자입니다.
 	virtual ~CInfo();
 	CString userid, userpw;
-	int game_sum, game_rsum;
+	int game_sum=0, game_rsum=0;
 	CArray <int, int> typenum;
-	int letter_sum;
-	int letter_rsum;
+	int letter_sum=0;
+	int letter_rsum=0;
 
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME

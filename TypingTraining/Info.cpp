@@ -73,10 +73,6 @@ BOOL CInfo::OnInitDialog()
 	
 	m_edit_userid.SetWindowText(userid);
 	
-	//CString str;
-	//str.Format(_T("%d"), typenum_sum);
-	//MessageBox(str);
-	
 	int typenum_sum = 0;
 	int i;
 	int count = typenum.GetCount();
@@ -85,31 +81,29 @@ BOOL CInfo::OnInitDialog()
 			typenum_sum += typenum.GetAt(i);
 	}
 	else{
-		for (i = count - 10; i < count; i++)
+		for (i = count - 10; i < count; i++) 
 			typenum_sum += typenum.GetAt(i);
 	}
 	int average = 0;
-	if(count<=10)
+	if (count <= 10)
 		average = typenum_sum / count;
 	else
 		average = typenum_sum / 10;
 	CString str_average;
 	str_average.Format(_T("%d타"), average);
-	//MessageBox(str_average);
 	m_edit_average.SetWindowText(str_average);
-	/*
+	
 	int accuracy = (letter_rsum / letter_sum) * 100;
 	CString str_accuracy;
-	str_accuracy.Format(_T("%d%"), accuracy);
-	MessageBox(str_accuracy);
-	//m_edit_accuracy.SetWindowText(str_accuracy);
+	str_accuracy.Format(_T("%d"), accuracy);
+	m_edit_accuracy.SetWindowTextW(str_accuracy);
 	/*
 	double exact = (game_rsum / game_sum) * 100;
 	CString str_exact;
 	str_exact.Format(_T("%.2lf%"), exact);
 	m_edit_exact.SetWindowTextW(str_exact);
 	*/
-	
+
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }
@@ -227,9 +221,7 @@ void CInfo::OnBnClickedDropout()
 				SetDlgItemText(IDC_USERID, _T(""));
 				SetDlgItemText(IDC_AVERAGE, _T(""));
 				SetDlgItemText(IDC_ACCURACY, _T(""));
-				SetDlgItemText(IDC_EXACT
-					
-					, _T(""));
+				SetDlgItemText(IDC_EXACT, _T(""));
 				infofile.Close();
 				break;
 			}
