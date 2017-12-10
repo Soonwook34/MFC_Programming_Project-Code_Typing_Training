@@ -34,11 +34,10 @@ public:
 	CInfo* m_pInfo;
 	
 	CString str_userid;
-	int m_game_sum, m_game_rsum;
+	int m_game_sum=0, m_game_rsum=0;
 	CArray <int, int> m_typenum;
-	int m_letter_sum;
-	int m_letter_rsum;
-
+	int m_letter_sum=0 ;
+	int m_letter_rsum=0 ;
 // 작업입니다.
 public:
 
