@@ -230,7 +230,7 @@ FONT 12, "Consolas", 400, 0, 0x0
 BEGIN
     EDITTEXT        IDC_STR,60,126,138,18,ES_AUTOHSCROLL
     DEFPUSHBUTTON   "Enter",IDC_ENTER,204,126,50,18
-    PUSHBUTTON      "뒤로가기",IDC_GO_BACK,276,150,50,14
+    PUSHBUTTON      "돌아가기",IDC_GO_BACK,276,150,50,14
     LTEXT           "맞은 개수 :",IDC_STATIC1,222,42,34,8
     LTEXT           "Static",IDC_RATE,264,42,25,8
     LTEXT           "Static",IDC_NUM,29,43,25,8

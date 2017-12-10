@@ -53,6 +53,7 @@ void CGame::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_NUM, m_num);
 	//	DDX_Control(pDX, IDC_STR, m_str);
 	DDX_Text(pDX, IDC_STR, m_str);
+	DDX_Control(pDX, IDC_ENTER, m_enter);
 }
 
 
@@ -71,6 +72,9 @@ END_MESSAGE_MAP()
 void CGame::OnBnClickedGoBack()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	if (count != 10) {
+		AfxMessageBox(_T("플레이 기록은 저장되지 않습니다."));
+	}
 	DestroyWindow();
 }
 
@@ -199,7 +203,7 @@ void CGame::OnBnClickedEnter()
 		if (n == 1)				//2회 틀렸을 때
 		{
 
-			AfxMessageBox(answer[count]);
+			AfxMessageBox(_T("틀렸습니다!"));
 			count++;
 			n = 0;
 			m_str = _T("");
@@ -229,8 +233,14 @@ void CGame::OnPaint()
 	if (count == 10) {
 		finalrate.Format(_T("축하합니다! 총 %d 문제를 맞췄습니다!"), j);
 		AfxMessageBox(finalrate);
-		DestroyWindow();
-	//	return;
+		AfxMessageBox(_T("맞은 개수는 통계에 기록됩니다!"));
+		//::SendMessage(this->m_hWnd, WM_CLOSE, NULL, NULL);	//에러
+		//OnClose();		//나가지지 않고 에러
+		//::PostQuitMessage(WM_QUIT);	//아예 윈도우 종료
+		//PostNcDestroy();	//에러
+		//DestroyWindow();	//에러
+		m_enter.EnableWindow(FALSE);
+		return;		//윈도우 안나가짐
 	}
 	m_prob.SetWindowText(problem[i]);
 	m_num.SetWindowText(numberArr[i]);
