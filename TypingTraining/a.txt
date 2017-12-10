@@ -1,0 +1,113 @@
+#include <cstdio>
+#include <iostream>
+#include <cmath>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+int main(){
+int num;
+int m_count = 10;
+int *a = new int [10];
+int ch;
+srand(time(NULL));
+for (int i = 0; i < m_count; i++) {
+num = rand() % 10;
+while (true) {
+ch = 1;
+for (int j = 0; j < i; j++) {
+if (a[j] == num) {
+ch = 0;
+num = rand() % 10;
+break;}}
+if (ch == 1)
+break;}
+a[i] = num;
+cout<<a[i]<<endl;}
+return 0;}
+void List_Class::Insert_List(int Position, int Data) {
+	Nptr temp = new Node;
+	temp->Data = Data;
+	temp->Next = NULL;
+	if ( Position <= 0 || Position-1 > Count)
+		cout << "Position Error" << endl;
+	else if (Position == 1) {
+		if (Head == NULL)
+			Head = temp;
+		else{
+			temp->Next = Head;
+			Head = temp;
+		}
+	}
+	else {
+		Nptr ptr = Head ;
+		for (int i=0 ; i<Position-2; i++)
+			ptr = ptr->Next;
+		temp->Next = ptr->Next;
+		ptr->Next = temp;
+	}
+	Count++;
+void List_Class::Delete_List(int Position){
+	Nptr temp = Head, ptr ;
+	if ( Position <=0 || Position-1 > Count )
+		cout << "Position Error" << endl ;
+	else if (Position == 1 ) {
+		ptr = Head;
+		Head = Head->Next;
+		delete(ptr);
+	}
+	else {
+		for (int i=0; i<Position-2 ; i++)
+			temp = temp->Next;
+		ptr = temp->Next ;
+		temp->Next = ptr->Next;
+		delete (ptr);
+	}
+	--Count;
+void List_Class::Output_List(){
+	if (Head == NULL)
+	else {
+		Nptr ptr = Head ;
+		while (ptr != NULL) {
+			cout << ptr->Data;
+			ptr = ptr->Next;
+void List_Class::Search_List(int Data) {
+
+	Nptr p = Head;
+	int counter = 0;
+
+	for (int i=0 ; i<Count ; i++) {
+		if ( p->Data == Data )
+			cout << "Find Data : " << Data << " Index : " << counter+1;
+		p = p->Next; counter ++;
+	if (p == NULL)
+		cout << " Finish Search" << endl;
+bool List_Class::IsEmpty_List() {
+	if (Count ==0)
+		return 0;
+	else
+		return 1;
+int List_Class::Length_List(){
+	return (Count);
+void List_Class::Set_Count(int Data) {
+	Count = Data;
+void List_Class::Set_Head(Nptr ptr) {
+	Head = ptr;
+int List_Class::Get_Count() {
+	return Count;
+Nptr List_Class::Get_Head() {
+	return Head;
+List_Class List;
+	List.Insert_List (1, 10);
+	List.Insert_List (2, 30);
+	List.Insert_List (2, 20);
+	List.Insert_List (4, 50);
+	List.Insert_List (5, 40);
+	List.Output_List ();
+	cout << endl;
+	List.Search_List (10);
+	List.Delete_List (2);
+	List.Output_List ();
+	cout << endl;
+	List.Set_Count(2);
+	cout << List.Length_List () << endl;
+	return 0;

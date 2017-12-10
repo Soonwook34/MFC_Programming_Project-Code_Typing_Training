@@ -190,6 +190,7 @@
     <ClInclude Include="Join.h" />
     <ClInclude Include="Login.h" />
     <ClInclude Include="Long.h" />
+    <ClInclude Include="LongList.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Short.h" />
@@ -205,6 +206,7 @@
     <ClCompile Include="Join.cpp" />
     <ClCompile Include="Login.cpp" />
     <ClCompile Include="Long.cpp" />
+    <ClCompile Include="LongList.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="Short.cpp" />
     <ClCompile Include="stdafx.cpp">
