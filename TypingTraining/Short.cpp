@@ -7,6 +7,9 @@
 #include "afxdialogex.h"
 #include "TypingTrainingDoc.h"
 #include "TypingTrainingView.h"
+#include "Info.h"
+
+class CInfo;
 
 //abcdefghijklmn
 //hi
@@ -269,7 +272,8 @@ void CShort::OnEnMaxtextCopy1()
 			end.Format(_T("빠르기: %d\n정확도: %d\n연습시간: %d분 %d초\n"), avgtyping, ch_allnum2 * 100 / ch_allnum, totalTime / 60, totalTime % 60);
 		else
 			end.Format(_T("빠르기: %d\n정확도: %d\n연습시간:%d초\n"), avgtyping, ch_allnum2 * 100 / ch_allnum, totalTime);
-		AfxMessageBox(end);
+		
+		MessageBox(end, _T("짧은 글 연습"));
 		DestroyWindow();
 		//exit(0);
 	}
@@ -412,7 +416,7 @@ BOOL CShort::PreTranslateMessage(MSG* pMsg)
 			end.Format(_T("빠르기: %d\n정확도: %d\n연습시간: %d분 %d초\n"), avgtyping, ch_allnum2 * 100 / ch_allnum, totalTime / 60, totalTime % 60);
 		else
 			end.Format(_T("빠르기: %d\n정확도: %d\n연습시간:%d초\n"), avgtyping, ch_allnum2 * 100 / ch_allnum, totalTime);
-		AfxMessageBox(end);
+		MessageBox(end, _T("짧은 글 연습"));
 		DestroyWindow();
 		return TRUE;
 		//exit(0);
