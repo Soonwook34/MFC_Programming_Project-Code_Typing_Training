@@ -54,8 +54,7 @@ BOOL CLongList::OnInitDialog()
 	if (!IsExist) {
 		IsExist = CreateDirectory(directory, NULL);
 	}
-
-	if (IsExist) {
+	else {
 		IsExist = longCodeFinder.FindFile(directory + strFile);
 		while (IsExist) {
 			IsExist = longCodeFinder.FindNextFile();

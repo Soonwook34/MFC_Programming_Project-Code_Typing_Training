@@ -28,6 +28,7 @@ public:
 	CListBox m_list;
 	CButton m_start;
 	CButton m_add;
+
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedStart();
 	afx_msg void OnBnClickedAdd();

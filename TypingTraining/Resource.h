@@ -14,6 +14,7 @@
 #define IDR_TypingTrainingTYPE          130
 #define IDD_JOIN                        318
 #define IDB_BITMAP1                     320
+#define IDD_LONGLIST                    321
 #define IDC_GO_SHORT                    1000
 #define IDC_GO_LONG                     1001
 #define IDC_GO_BACK                     1001
@@ -51,14 +52,18 @@
 #define IDC_STR4                        1032
 #define IDC_STR5                        1033
 #define IDC_BUTTON1                     1034
+#define IDC_BUTTON2                     1035
+#define IDADD                           1035
+#define IDSTART                         1036
+#define IDC_LIST                        1037
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        321
+#define _APS_NEXT_RESOURCE_VALUE        323
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1035
+#define _APS_NEXT_CONTROL_VALUE         1038
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

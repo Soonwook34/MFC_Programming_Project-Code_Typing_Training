@@ -24,6 +24,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	CTypingTrainingView* m_pMain;
+	CString fileName;
 	CButton m_goBack;
 	afx_msg void OnBnClickedGoBack();
 	virtual void PostNcDestroy();
