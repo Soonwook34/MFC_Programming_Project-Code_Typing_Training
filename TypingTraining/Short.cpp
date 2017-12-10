@@ -273,7 +273,11 @@ void CShort::OnEnMaxtextCopy1()
 		else
 			end.Format(_T("빠르기: %d\n정확도: %d\n연습시간:%d초\n"), avgtyping, ch_allnum2 * 100 / ch_allnum, totalTime);
 		
-		MessageBox(end, _T("짧은 글 연습"));
+		m_pMain->m_typenum.Add(avgtyping);
+		m_pMain->m_letter_sum += ch_allnum;
+		m_pMain->m_letter_rsum += ch_allnum2;
+
+		MessageBox(end, _T("짧은 글 연습"), MB_ICONINFORMATION);
 		DestroyWindow();
 		//exit(0);
 	}
@@ -416,7 +420,12 @@ BOOL CShort::PreTranslateMessage(MSG* pMsg)
 			end.Format(_T("빠르기: %d\n정확도: %d\n연습시간: %d분 %d초\n"), avgtyping, ch_allnum2 * 100 / ch_allnum, totalTime / 60, totalTime % 60);
 		else
 			end.Format(_T("빠르기: %d\n정확도: %d\n연습시간:%d초\n"), avgtyping, ch_allnum2 * 100 / ch_allnum, totalTime);
-		MessageBox(end, _T("짧은 글 연습"));
+		
+		m_pMain->m_typenum.Add(avgtyping);
+		m_pMain->m_letter_sum += ch_allnum;
+		m_pMain->m_letter_rsum += ch_allnum2;
+
+		MessageBox(end, _T("짧은 글 연습"), MB_ICONINFORMATION);
 		DestroyWindow();
 		return TRUE;
 		//exit(0);
