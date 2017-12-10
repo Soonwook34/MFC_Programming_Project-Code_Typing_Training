@@ -71,33 +71,44 @@ BOOL CInfo::OnInitDialog()
 	// TODO:  여기에 추가 초기화 작업을 추가합니다.
 	
 	m_edit_userid.SetWindowText(userid);
-	/*
+	
+	//CString str;
+	//str.Format(_T("%d"), typenum_sum);
+	//MessageBox(str);
+	
 	int typenum_sum = 0;
 	int i;
-	for (i = 0; i <1000; i += 100) {
-		typenum.Add(i);
-	}
 	int count = typenum.GetCount();
-	for (i = count - 10; i < count; i++) {
-		int please = typenum.GetAt(i);
-		typenum_sum += please;
+	if (count <= 10) {
+		for (i = 0; i < count; i++)
+			typenum_sum += typenum.GetAt(i);
 	}
-	double average = (double)typenum_sum / 10;
+	else{
+		for (i = count - 10; i < count; i++)
+			typenum_sum += typenum.GetAt(i);
+	}
+	int average = 0;
+	if(count<=10)
+		average = typenum_sum / count;
+	else
+		average = typenum_sum / 10;
 	CString str_average;
-	str_average.Format(_T("%.2lf타"), average);
+	str_average.Format(_T("%d타"), average);
+	//MessageBox(str_average);
 	m_edit_average.SetWindowText(str_average);
-	
-	double accuracy = (letter_rsum / letter_sum) * 100;
+	/*
+	int accuracy = (letter_rsum / letter_sum) * 100;
 	CString str_accuracy;
-	str_accuracy.Format(_T("%.2lf%"), accuracy);
-	m_edit_accuracy.SetWindowTextW(str_accuracy);
-
+	str_accuracy.Format(_T("%d%"), accuracy);
+	MessageBox(str_accuracy);
+	//m_edit_accuracy.SetWindowText(str_accuracy);
+	/*
 	double exact = (game_rsum / game_sum) * 100;
 	CString str_exact;
 	str_exact.Format(_T("%.2lf%"), exact);
 	m_edit_exact.SetWindowTextW(str_exact);
 	*/
-
+	
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }

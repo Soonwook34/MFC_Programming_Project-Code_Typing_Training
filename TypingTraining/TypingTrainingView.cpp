@@ -192,6 +192,15 @@ void CTypingTrainingView::OnDraw(CDC* pDC)
 		if (m_pInfo == NULL) {
 			m_pInfo = new CInfo(this);
 			m_pInfo->userid = str_userid;
+			//m_pInfo->game_sum = m_game_sum;
+			//m_pInfo->game_rsum = m_game_rsum;
+			int ncount;
+			for (ncount = 0; ncount < m_typenum.GetCount(); ncount++) {
+				int value = m_typenum.GetAt(ncount);
+				m_pInfo->typenum.Add(value);
+			}
+			m_pInfo->letter_sum = m_letter_sum;
+			m_pInfo->letter_rsum = m_letter_rsum;
 			m_pInfo->Create(IDD_STATIC, this);
 			m_pInfo->ShowWindow(SW_SHOW);
 		}
