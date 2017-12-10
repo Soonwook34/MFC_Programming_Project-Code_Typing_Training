@@ -396,6 +396,8 @@ BOOL CShort::PreTranslateMessage(MSG* pMsg)
 			OnBnClickedGoBack();
 			return TRUE;
 		}
+		else if (pMsg->wParam==VK_TAB)
+			return TRUE;
 	}
 
 	if (str_num >= str_allnum - 4)
