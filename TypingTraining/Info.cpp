@@ -10,7 +10,6 @@
 
 
 
-
 // CInfo 대화 상자입니다.
 
 IMPLEMENT_DYNAMIC(CInfo, CDialog)
