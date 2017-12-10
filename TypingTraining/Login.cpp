@@ -67,8 +67,9 @@ void CLogin::OnBnClickedGoMain()
 	else if (n >= 0) {
 		MessageBox(_T("로그인 성공"));
 		infofile.Close();
+		//메인화면에 아이디 넘겨주기
+		m_pMain->str_userid = str_id;
 		DestroyWindow();
-		//메인화면 다이얼로그 출현시키는 코드작성할 부분
 	}
 	else
 		MessageBox(_T("로그인 실패"));
@@ -81,6 +82,7 @@ void CLogin::PostNcDestroy()
 	m_pMain->ShowWindow(SW_SHOW);
 	m_pMain->mode = IDD_TYPINGTRAINING_FORM;
 	m_pMain->m_pLogin = NULL;
+	m_pMain->str_userid = str_id;
 	delete this;
 	CDialog::PostNcDestroy();
 }

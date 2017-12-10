@@ -32,7 +32,6 @@ public:
 	CLong* m_pLong;
 	CGame* m_pGame;
 	CInfo* m_pInfo;
-	
 	CString str_userid;
 // 작업입니다.
 public:

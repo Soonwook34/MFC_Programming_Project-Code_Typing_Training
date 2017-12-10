@@ -86,9 +86,7 @@ void CTypingTrainingView::OnInitialUpdate()
 
 	m_tab.SetCurSel(0);
 	m_explain.SetWindowTextW(_T("짧은 코드 연습\r\n코드 연습은 입력하는 빠르기에 따라\r\n현재 타수와 최고 타수가 실시간으로 나타납니다."));
-
-	//m_pLogin = new CLogin();
-	//str_userid = m_pLogin->str_id;
+	
 }
 
 
@@ -154,9 +152,6 @@ void CTypingTrainingView::OnDraw(CDC* pDC)
 		int iHeight = rect.Height();
 		m_imgcanvas.GetDC()->StretchBlt(0, 0, iWidth, iHeight, &memDC, 0, 0, bmpinfo.bmWidth, bmpinfo.bmHeight, SRCCOPY);
 		
-		//m_user.ShowWindow(SW_SHOW);
-		//m_pLogin = new CLogin();
-		//str_userid = m_pLogin->str_id;
 		//SetDlgItemText(IDC_USER, str_userid);
 		
 
@@ -196,6 +191,7 @@ void CTypingTrainingView::OnDraw(CDC* pDC)
 	case IDD_STATIC:
 		if (m_pInfo == NULL) {
 			m_pInfo = new CInfo(this);
+			m_pInfo->userid = str_userid;
 			m_pInfo->Create(IDD_STATIC, this);
 			m_pInfo->ShowWindow(SW_SHOW);
 		}
