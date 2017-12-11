@@ -227,6 +227,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\bitmap1.bmp" />
+    <Image Include="res\bitmap2.bmp" />
     <Image Include="res\Toolbar.bmp" />
     <Image Include="res\TypingTraining.ico" />
     <Image Include="res\TypingTrainingDoc.ico" />
