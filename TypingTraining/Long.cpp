@@ -524,8 +524,13 @@ BOOL CLong::OnInitDialog()
 			}
 			speedCnt = 0;
 			typeIndex++;
-			typeIndex %= 301;
-			int curSpeed = speedSum * 300 / typeIndex;
+			int curSpeed;
+			if (typeIndex > 300) {
+				curSpeed = speedSum;
+			}
+			else {
+				curSpeed = speedSum * 300 / typeIndex;
+			}
 			CString strSpeed;
 			strSpeed.Format(_T("%dŸ"), curSpeed);
 			if (curSpeed > bestSpeed) {
