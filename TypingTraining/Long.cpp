@@ -20,9 +20,9 @@ CLong::CLong(CWnd* pParent /*=NULL*/)
 	m_pMain = (CTypingTrainingView*)pParent;
 	fileName = _T("");
 	CLongList listDlg(this);
-	red = RGB(225, 50, 25);
-	blue = RGB(50, 25, 225);
-	black = RGB(0, 0, 0);
+	red = RGB(225, 100, 100);
+	blue = RGB(150, 175, 100);
+	black = RGB(255, 225, 200);
 	speedCnt = 0;
 	speedSum = 0;
 	correctChar = 0;
@@ -67,6 +67,7 @@ BEGIN_MESSAGE_MAP(CLong, CDialog)
 	ON_EN_CHANGE(IDC_EDIT4, &CLong::OnEnChangeEdit4)
 	ON_EN_CHANGE(IDC_EDIT5, &CLong::OnEnChangeEdit5)
 	ON_WM_TIMER()
+	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 
@@ -96,13 +97,20 @@ void CLong::OnPaint()
 	CPaintDC dc(this); // device context for painting
 					   // TODO: 여기에 메시지 처리기 코드를 추가합니다.
 					   // 그리기 메시지에 대해서는 CDialog::OnPaint()을(를) 호출하지 마십시오.
-	CFont font;
+	CRect rect;
+	GetClientRect(&rect);
+	dc.SetMapMode(MM_ANISOTROPIC);
+	dc.SetWindowExt(752, 480);
+	dc.SetViewportExt(rect.Width(), rect.Height());
+	
+	CFont font, font2;
 	CString c, cc;
 	int i, j, k, strNum;
 
-	font.CreatePointFont(120, _T("Consolas"));
+	font.CreateFont(18, 9, 0, 0, 0/*FW_BOLD*/, 0, 0, 0, 0, 0, 0, 0, 0, _T("Consolas"));
+	font2.CreateFont(18, 6, 0, 0, 0/*FW_BOLD*/, 0, 0, 0, 0, 0, 0, 0, 0, _T("Consolas"));
 	dc.SelectObject(&font);
-	dc.SetBkColor(RGB(240, 240, 240));
+	dc.SetBkColor(RGB(0, 0, 0));
 	CPoint point(31, 135);
 	dc.TextOut(point.x, point.y, _T("asdf"));
 	strNum = (curPage - 1) * 5;
@@ -115,22 +123,28 @@ void CLong::OnPaint()
 			cc = check[i].GetAt(k);
 			if (cc == _T('0')) dc.SetTextColor(blue);
 			else if (cc == _T('1')) dc.SetTextColor(red);
-			dc.TextOut(point.x, point.y, c);
 			if (0 >= c.GetAt(0) || 127 < c.GetAt(0)) {
+				dc.SelectObject(&font2);
+				dc.TextOut(point.x, point.y, c);
 				point.x += 12;
 			}
 			else {
+				dc.SelectObject(&font);
+				dc.TextOut(point.x, point.y, c);
 				point.x += 9;
 			}
 		}
 		dc.SetTextColor(black);
 		for (k; k < fileStr[strNum + i].GetLength(); k++) {
 			c = fileStr[strNum + i].GetAt(k);
-			dc.TextOut(point.x, point.y, c);
 			if (0 >= c.GetAt(0) || 127 < c.GetAt(0)) {
+				dc.SelectObject(&font2);
+				dc.TextOut(point.x, point.y, c);
 				point.x += 12;
 			}
 			else {
+				dc.SelectObject(&font);
+				dc.TextOut(point.x, point.y, c);
 				point.x += 9;
 			}
 		}
@@ -497,6 +511,8 @@ BOOL CLong::OnInitDialog()
 		int totalSpeed = (int)((float)correctChar / (float)time * 600);
 		timer.Format(_T("걸린 시간 > %d : %d\n평균 타수 > %d타/min\n최고 타수 > %d타/min\n정확도 > %d%%"), time / 600, (time % 600) / 10, totalSpeed, bestSpeed, (int)((float)correctChar / (float)totalChar * 100));
 		AfxMessageBox(timer);
+		m_pMain->m_letter_rsum += correctChar;
+		m_pMain->m_letter_sum += totalChar;
 		DestroyWindow();
 		return;
 	}
@@ -524,8 +540,13 @@ BOOL CLong::OnInitDialog()
 			}
 			speedCnt = 0;
 			typeIndex++;
-			typeIndex %= 301;
-			int curSpeed = speedSum * 300 / typeIndex;
+			int curSpeed;
+			if (typeIndex > 300) {
+				curSpeed = speedSum;
+			}
+			else {
+				curSpeed = speedSum * 300 / typeIndex;
+			}
 			CString strSpeed;
 			strSpeed.Format(_T("%d타"), curSpeed);
 			if (curSpeed > bestSpeed) {
@@ -535,4 +556,29 @@ BOOL CLong::OnInitDialog()
 			m_speed.SetWindowText(strSpeed);
 		}
 		CDialog::OnTimer(nIDEvent);
+	}
+
+
+	HBRUSH CLong::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+	{
+		HBRUSH hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);
+
+		// TODO:  여기서 DC의 특성을 변경합니다.
+		switch (nCtlColor) {
+		case CTLCOLOR_DLG:
+			return (HBRUSH)GetStockObject(BLACK_BRUSH);
+			break;
+		case CTLCOLOR_BTN:
+			pDC->SetBkMode(BLACK_BRUSH);
+			return (HBRUSH)GetStockObject(BLACK_BRUSH);
+			break;
+		case CTLCOLOR_STATIC:
+		case CTLCOLOR_EDIT:
+			pDC->SetTextColor(RGB(255, 225, 200));
+			pDC->SetBkMode(BLACK_BRUSH);
+			return (HBRUSH)GetStockObject(BLACK_BRUSH);
+			break;
+		}
+		// TODO:  기본값이 적당하지 않으면 다른 브러시를 반환합니다.
+		return hbr;
 	}

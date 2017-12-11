@@ -62,4 +62,5 @@ public:
 	void ShowFinalResult();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	CStatic m_bestSpeed;
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 };
