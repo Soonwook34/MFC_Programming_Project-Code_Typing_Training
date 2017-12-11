@@ -83,6 +83,7 @@ void CLogin::PostNcDestroy()
 	m_pMain->mode = IDD_TYPINGTRAINING_FORM;
 	m_pMain->m_pLogin = NULL;
 	m_pMain->str_userid = str_id;
+	m_pMain->str_userpw = str_pw;
 	delete this;
 	CDialog::PostNcDestroy();
 }

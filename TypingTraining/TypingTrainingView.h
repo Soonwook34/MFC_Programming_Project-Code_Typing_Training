@@ -33,11 +33,16 @@ public:
 	CGame* m_pGame;
 	CInfo* m_pInfo;
 	
-	CString str_userid;
+	CString str_userid, str_userpw;
 	int m_game_sum, m_game_rsum;
 	CArray <int, int> m_typenum;
 	int m_letter_sum ;
 	int m_letter_rsum ;
+	
+	int m_static_count;
+	int m_game_count;
+	int m_practice_count;
+
 // 작업입니다.
 public:
 

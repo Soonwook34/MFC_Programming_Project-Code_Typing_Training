@@ -18,7 +18,13 @@ public:
 	CArray <int, int> typenum;
 	int letter_sum;
 	int letter_rsum;
-
+	
+	int static_count;
+	int practice_count;
+	int game_count;
+	
+	int count;
+	int average;
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_STATIC };
