@@ -39,6 +39,8 @@ CGame::CGame(CWnd* pParent /*=NULL*/)
 	}
 
 	count = 0;
+
+	m_pMain = (CTypingTrainingView*)pParent;
 }
 
 CGame::~CGame()
@@ -164,10 +166,12 @@ BOOL CGame::OnInitDialog()
 	//초기값
 	rate = 0;
 
+
 	m_prob.SetWindowText(problem[0]);
+
 	m_num.SetWindowText(numberArr[0]);
 	m_rate.SetWindowText(_T(""));
-	m_brush.CreateSolidBrush(RGB(255, 255, 255));
+	m_brush.CreateSolidBrush(RGB(0, 0, 0));
 
 	m_prob.ShowWindow(SW_SHOW);
 	m_num.ShowWindow(SW_SHOW);
@@ -231,14 +235,17 @@ void CGame::OnPaint()
 	int i = count;
 	int j = rate;
 	CString finalrate;
+
 	if (count == 10) {
 		finalrate.Format(_T("축하합니다! 총 %d 문제를 맞췄습니다!"), j);
 		AfxMessageBox(finalrate);
 		AfxMessageBox(_T("맞은 개수는 통계에 기록됩니다!"));
 		
-		info.game_rsum = rate;
-		info.game_sum = count;
+		//info.game_rsum = rate;
+		//info.game_sum = count;
 
+		m_pMain->m_game_sum += count;
+		m_pMain->m_game_rsum += rate;
 
 		//::SendMessage(this->m_hWnd, WM_CLOSE, NULL, NULL);	//에러
 		//OnClose();		//나가지지 않고 에러
@@ -248,6 +255,9 @@ void CGame::OnPaint()
 		m_enter.EnableWindow(FALSE);
 		return;		//윈도우 안나가짐
 	}
+	//dc.SetTextColor(RGB(255, 255, 255));
+	//dc.DrawText
+	
 	m_prob.SetWindowText(problem[i]);
 	m_num.SetWindowText(numberArr[i]);
 	m_rate.SetWindowText(rateArr[j]);
@@ -258,7 +268,7 @@ BOOL CGame::OnEraseBkgnd(CDC* pDC)
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	CRect rect;
 	GetClientRect(rect);
-	pDC->FillSolidRect(rect, RGB(255, 255, 255));
+	pDC->FillSolidRect(rect, RGB(0, 0, 0));
 
 	return TRUE;
 }
@@ -269,26 +279,63 @@ HBRUSH CGame::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	HBRUSH hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);
 
 	// TODO:  여기서 DC의 특성을 변경합니다.
-	if (pWnd->GetDlgCtrlID() == IDC_RATE)
+	/*if (pWnd->GetDlgCtrlID() == IDC_RATE)
 	{
-		pDC->SetBkColor(RGB(255, 255, 255));
+		pDC->SetBkColor(RGB(0, 0, 0));
 		return m_brush;
 	}
 	if (pWnd->GetDlgCtrlID() == IDC_STATIC1)
 	{
-		pDC->SetBkColor(RGB(255, 255, 255));
+		pDC->SetBkColor(RGB(0, 0, 0));
 		return m_brush;
 	}
 	if (pWnd->GetDlgCtrlID() == IDC_QUESTION)
 	{
-		pDC->SetBkColor(RGB(255, 255, 255));
+		pDC->SetBkColor(RGB(0, 0, 0));
 		return m_brush;
 	}
 	if (pWnd->GetDlgCtrlID() == IDC_NUM)
 	{
-		pDC->SetBkColor(RGB(255, 255, 255));
+		pDC->SetBkColor(RGB(0, 0, 0));
+		return m_brush;
+	}*/
+	/*if (pWnd->GetDlgCtrlID() == IDC_QUESTION)
+	{
+		pDC->SetTextColor(RGB(255,255,255));
 		return m_brush;
 	}
+	if (pWnd->GetDlgCtrlID() == IDC_RATE)
+	{
+		pDC->SetTextColor(RGB(255, 255, 255));
+		return m_brush;
+	}
+	if (pWnd->GetDlgCtrlID() == IDC_NUM)
+	{
+		pDC->SetTextColor(RGB(255, 255, 255));
+		return m_brush;
+	}
+	if (pWnd->GetDlgCtrlID() == IDC_STATIC1)
+	{
+		pDC->SetTextColor(RGB(255, 255, 255));
+		return m_brush;
+	}*/
+
+	switch (nCtlColor) {
+	case CTLCOLOR_DLG:
+		return (HBRUSH)GetStockObject(BLACK_BRUSH);
+		break;
+	case CTLCOLOR_BTN:
+		pDC->SetBkMode(BLACK_BRUSH);
+		return (HBRUSH)GetStockObject(BLACK_BRUSH);
+		break;
+	case CTLCOLOR_STATIC :
+	case CTLCOLOR_EDIT :
+		pDC->SetTextColor(RGB(255, 255, 200));
+		pDC->SetBkColor(BLACK_BRUSH);
+		return (HBRUSH)GetStockObject(BLACK_BRUSH);
+		break;
+	}
+
 	// TODO:  기본값이 적당하지 않으면 다른 브러시를 반환합니다.
 	return hbr;
 }
