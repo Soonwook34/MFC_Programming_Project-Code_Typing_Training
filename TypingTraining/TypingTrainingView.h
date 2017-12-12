@@ -18,6 +18,8 @@ protected: // serialization에서만 만들어집니다.
 	CTypingTrainingView();
 	DECLARE_DYNCREATE(CTypingTrainingView)
 
+
+
 public:
 #ifdef AFX_DESIGN_TIME
 	enum{ IDD = IDD_TYPINGTRAINING_FORM };
