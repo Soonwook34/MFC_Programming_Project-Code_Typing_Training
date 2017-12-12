@@ -20,6 +20,7 @@ IMPLEMENT_DYNAMIC(CShort, CDialog)
 CShort::CShort(CWnd* pParent /*=NULL*/)
 	: CDialog(IDD_SHORT, pParent)
 {
+
 	m_pMain = (CTypingTrainingView*)pParent;
 }
 
@@ -259,8 +260,10 @@ void CShort::OnEnMaxtextCopy1()
 		m_best.SetWindowText(temp);
 	}
 	CDC *pDC = GetDC();
+	CRect rect;
+	GetClientRect(&rect);
 	pDC->SelectStockObject(BLACK_BRUSH);
-	pDC->Rectangle(35, 125, 650, 150);
+	pDC->Rectangle(rect);
 
 	avgtyping += besttemp;
 
@@ -394,8 +397,10 @@ BOOL CShort::PreTranslateMessage(MSG* pMsg)
 			}
 			avgtyping += besttemp;
 			CDC *pDC = GetDC();
+			CRect rect;
+			GetClientRect(&rect);
 			pDC->SelectStockObject(BLACK_BRUSH);
-			pDC->Rectangle(35, 125, 650, 145);
+			pDC->Rectangle(rect);
 		}
 
 		else if (pMsg->wParam == VK_BACK) {

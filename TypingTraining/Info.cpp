@@ -226,9 +226,9 @@ BOOL CInfo::OnInitDialog()
 			str_accuracy.Format(_T("%d퍼센트"), accuracy);
 			m_edit_accuracy.SetWindowText(str_accuracy);
 
-			CString please;
-			please.Format(_T("%d"), game_rsum);
-			MessageBox(please);
+			//CString please;
+			//please.Format(_T("%d"), game_rsum);
+			//MessageBox(please);
 			int exact = (game_rsum * 100) / game_sum;
 			CString str_exact;
 			str_exact.Format(_T("%d퍼센트"), exact);
