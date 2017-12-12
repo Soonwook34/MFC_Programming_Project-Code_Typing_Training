@@ -32,6 +32,8 @@ BEGIN_MESSAGE_MAP(CTypingTrainingView, CFormView)
 	ON_BN_CLICKED(IDC_GO_GAME, &CTypingTrainingView::OnBnClickedGoGame)
 	ON_BN_CLICKED(IDC_GO_STATIC, &CTypingTrainingView::OnBnClickedGoStatic)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB, &CTypingTrainingView::OnTcnSelchangeTab)
+	ON_WM_CTLCOLOR()
+	ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
 // CTypingTrainingView 생성/소멸
@@ -72,6 +74,7 @@ void CTypingTrainingView::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EXPLAIN, m_explain);
 	DDX_Control(pDX, IDC_USER, m_user);
 	DDX_Control(pDX, IDC_IMAGE, m_imgcanvas);
+	DDX_Control(pDX, IDC_MAIN, m_main);
 }
 
 BOOL CTypingTrainingView::PreCreateWindow(CREATESTRUCT& cs)
@@ -94,8 +97,23 @@ void CTypingTrainingView::OnInitialUpdate()
 	m_tab.InsertItem(3, _T("static"), 0);
 
 	m_tab.SetCurSel(0);
-	m_explain.SetWindowTextW(_T("짧은 코드 연습\r\n코드 연습은 입력하는 빠르기에 따라\r\n현재 타수와 최고 타수가 실시간으로 나타납니다."));
-	
+	m_explain.SetWindowTextW(_T("짧은 코드 연습\r\n\r\n코드 연습은 입력하는 빠르기에 따라\r\n현재 타수와 최고 타수가 실시간으로\r\n나타납니다."));
+
+	CFont font, font2, font3;
+	font.CreatePointFont(400, _T("Consolas"));
+	m_main.SetFont(&font);
+	font.Detach();
+
+	font2.CreatePointFont(150, _T("궁서"));
+	m_explain.SetFont(&font2);
+	font2.Detach();
+
+	font3.CreatePointFont(200, _T("Consolas"));
+	m_goGame.SetFont(&font3);
+	m_goShort.SetFont(&font3);
+	m_goLong.SetFont(&font3);
+	m_goStatic.SetFont(&font3);
+	font3.Detach();
 }
 
 
@@ -259,21 +277,56 @@ void CTypingTrainingView::OnTcnSelchangeTab(NMHDR *pNMHDR, LRESULT *pResult)
 	int nIndex = m_tab.GetCurSel();
 	CString str;
 	if (nIndex == 0) {
-		str.Format(_T("짧은 코드 연습\r\n코드 연습은 입력하는 빠르기에 따라\r\n 현재 타수와 최고 타수가 실시간으로 나타납니다."));
+		str.Format(_T("짧은 코드 연습\r\n\r\n코드 연습은 입력하는 빠르기에 따라\r\n현재 타수와 최고 타수가 실시간으로\r\n나타납니다."));
 		m_explain.SetWindowText(str);
 	}
 	else if (nIndex == 1) {
-		str.Format(_T("긴 코드 연습\r\n코드 연습은 입력하는 빠르기에 따라\r\n 현재 타수와 최고 타수가 실시간으로 나타납니다."));
+		str.Format(_T("긴 코드 연습\r\n\r\n코드 연습은 입력하는 빠르기에 따라\r\n현재 타수와 최고 타수가 실시간으로\r\n나타납니다."));
 		m_explain.SetWindowText(str);
 	}
 	else if (nIndex == 2) {
-		str.Format(_T("게임\r\n주어진 문제를 맞추면 맞은 개수가\r\n왼편에 나타납니다."));
+		str.Format(_T("게임\r\n\r\n주어진 문제를 맞추면 맞은 개수가\r\n왼편에 나타납니다."));
 		m_explain.SetWindowText(str);
 	}
-	else if(nIndex == 3){
-		str.Format(_T("통계\r\n평균타수가 나타납니다."));
+	else if (nIndex == 3) {
+		str.Format(_T("통계\r\n\r\n평균타수가 나타납니다."));
 		m_explain.SetWindowText(str);
 	}
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	*pResult = 0;
+}
+
+
+HBRUSH CTypingTrainingView::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	HBRUSH hbr = CFormView::OnCtlColor(pDC, pWnd, nCtlColor);
+
+	// TODO:  여기서 DC의 특성을 변경합니다.
+	switch (nCtlColor) {
+	case CTLCOLOR_DLG:
+		return (HBRUSH)GetStockObject(BLACK_BRUSH);
+		break;
+	case CTLCOLOR_BTN:
+		pDC->SetBkMode(TRANSPARENT);
+		return (HBRUSH)GetStockObject(NULL_BRUSH);
+		break;
+	case CTLCOLOR_STATIC:
+	case CTLCOLOR_EDIT:
+		pDC->SetTextColor(RGB(255, 225, 200));
+		pDC->SetBkMode(BLACK_BRUSH);
+		pDC->SetBkColor(RGB(0, 0, 0));
+		return (HBRUSH)GetStockObject(BLACK_BRUSH);
+	}
+	// TODO:  기본값이 적당하지 않으면 다른 브러시를 반환합니다.
+	return hbr;
+}
+
+
+BOOL CTypingTrainingView::OnEraseBkgnd(CDC* pDC)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+	CRect rect;
+	GetClientRect(rect);
+	pDC->FillSolidRect(rect, RGB(0, 0, 0));
+	return CFormView::OnEraseBkgnd(pDC);
 }

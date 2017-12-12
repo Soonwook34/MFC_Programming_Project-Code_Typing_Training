@@ -81,6 +81,9 @@ public:
 	afx_msg void OnTcnSelchangeTab(NMHDR *pNMHDR, LRESULT *pResult);
 	CStatic m_user;
 	CStatic m_imgcanvas;
+	CStatic m_main;
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
+	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 };
 
 #ifndef _DEBUG  // TypingTrainingView.cpp의 디버그 버전
