@@ -479,11 +479,15 @@ BOOL CLong::OnInitDialog()
 			return TRUE;
 		else if (GetDlgItem(IDC_EDIT1)->m_hWnd == pMsg->hwnd && pMsg->message == WM_RBUTTONDOWN)
 			return TRUE;
+		else if (GetDlgItem(IDC_EDIT1)->m_hWnd == pMsg->hwnd && pMsg->message == WM_LBUTTONDBLCLK)
+			return TRUE;
 		else if (GetDlgItem(IDC_EDIT2)->m_hWnd == pMsg->hwnd && pMsg->message == WM_LBUTTONDOWN)
 			return TRUE;
 		else if (GetDlgItem(IDC_EDIT2)->m_hWnd == pMsg->hwnd && pMsg->message == WM_MBUTTONDOWN)
 			return TRUE;
 		else if (GetDlgItem(IDC_EDIT2)->m_hWnd == pMsg->hwnd && pMsg->message == WM_RBUTTONDOWN)
+			return TRUE;
+		else if (GetDlgItem(IDC_EDIT2)->m_hWnd == pMsg->hwnd && pMsg->message == WM_LBUTTONDBLCLK)
 			return TRUE;
 		else if (GetDlgItem(IDC_EDIT3)->m_hWnd == pMsg->hwnd && pMsg->message == WM_LBUTTONDOWN)
 			return TRUE;
@@ -491,17 +495,23 @@ BOOL CLong::OnInitDialog()
 			return TRUE;
 		else if (GetDlgItem(IDC_EDIT3)->m_hWnd == pMsg->hwnd && pMsg->message == WM_RBUTTONDOWN)
 			return TRUE;
+		else if (GetDlgItem(IDC_EDIT3)->m_hWnd == pMsg->hwnd && pMsg->message == WM_LBUTTONDBLCLK)
+			return TRUE;
 		else if (GetDlgItem(IDC_EDIT4)->m_hWnd == pMsg->hwnd && pMsg->message == WM_LBUTTONDOWN)
 			return TRUE;
 		else if (GetDlgItem(IDC_EDIT4)->m_hWnd == pMsg->hwnd && pMsg->message == WM_MBUTTONDOWN)
 			return TRUE;
 		else if (GetDlgItem(IDC_EDIT4)->m_hWnd == pMsg->hwnd && pMsg->message == WM_RBUTTONDOWN)
 			return TRUE;
+		else if (GetDlgItem(IDC_EDIT4)->m_hWnd == pMsg->hwnd && pMsg->message == WM_LBUTTONDBLCLK)
+			return TRUE;
 		else if (GetDlgItem(IDC_EDIT5)->m_hWnd == pMsg->hwnd && pMsg->message == WM_LBUTTONDOWN)
 			return TRUE;
 		else if (GetDlgItem(IDC_EDIT5)->m_hWnd == pMsg->hwnd && pMsg->message == WM_MBUTTONDOWN)
 			return TRUE;
 		else if (GetDlgItem(IDC_EDIT5)->m_hWnd == pMsg->hwnd && pMsg->message == WM_RBUTTONDOWN)
+			return TRUE;
+		else if (GetDlgItem(IDC_EDIT5)->m_hWnd == pMsg->hwnd && pMsg->message == WM_LBUTTONDBLCLK)
 			return TRUE;
 		return CDialog::PreTranslateMessage(pMsg);
 	}
