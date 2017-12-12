@@ -194,6 +194,7 @@ void CGame::OnBnClickedEnter()
 	//정답을 맞추었을 때
 	if (m_str == answer[count]) {
 		rate++;
+		Invalidate();
 		AfxMessageBox(correct);
 		n = 0;
 		m_str = _T("");
