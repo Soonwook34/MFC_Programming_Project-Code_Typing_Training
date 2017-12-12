@@ -193,12 +193,12 @@ void CGame::OnBnClickedEnter()
 	//	CString wrong2;
 	//정답을 맞추었을 때
 	if (m_str == answer[count]) {
+		rate++;
 		AfxMessageBox(correct);
 		n = 0;
 		m_str = _T("");
 		UpdateData(FALSE);
 		count++;
-		rate++;
 		Invalidate();
 
 	}
