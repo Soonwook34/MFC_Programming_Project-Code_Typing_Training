@@ -201,6 +201,7 @@ BOOL CLong::OnInitDialog()
 		m_edit3.SetLimitText(fileStr[curPage * 5 + 2].GetLength());
 		m_edit4.SetLimitText(fileStr[curPage * 5 + 3].GetLength());
 		m_edit5.SetLimitText(fileStr[curPage * 5 + 4].GetLength());
+
 		curPage++;
 		CString page;
 		page.Format(_T("%d / %dÂÊ"), curPage, totalPage);
