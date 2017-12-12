@@ -254,6 +254,14 @@ BOOL CInfo::OnInitDialog()
 				}
 				else {
 					infofile.Seek(pos, CFile::begin);
+					int len = written_str.GetLength();
+					CString fix_str;
+					int i;
+					for (i = 0; i < len; i++)
+						fix_str += _T(" ");
+					infofile.WriteString(fix_str);
+					infofile.SeekToEnd();
+					//infofile.Seek(pos, CFile::begin);
 					//int len = written_str.GetLength();
 					//infofile.WriteString(_T("0123456789"));
 					CString str_average, str_lettersum, str_letter_rsum, str_gamesum, str_game_rsum;
@@ -264,10 +272,10 @@ BOOL CInfo::OnInitDialog()
 					str_game_rsum.Format(_T("%d"), game_rsum);
 					//infofile.WriteString(_T("\n"));
 					//infofile.WriteString(_T("\n"));
-					CString tmp;
-					for (int i = 0; i < written_str.GetLength(); i++)
-						tmp += _T("");
-					infofile.WriteString(tmp);
+					//CString tmp;
+					//for (int i = 0; i < written_str.GetLength(); i++)
+					//	tmp += _T("");
+					//infofile.WriteString(tmp);
 					infofile.WriteString(_T("\n"));
 					infofile.WriteString(_T("*") + userid + _T(".") + userpw + _T(".") + str_average + _T(".") + str_lettersum + _T(".") + str_letter_rsum + _T(".") + str_gamesum + _T(".") + str_game_rsum);
 

@@ -86,7 +86,9 @@ void CJoin::OnOK()
 			CString strnum;
 			int num = 0;
 			strnum.Format(_T("%d"), num);
-			infofile.WriteString(_T("*")+str_newid + _T(".")+str_newpw+_T(".")+strnum+_T(".")+ strnum + _T(".") + strnum + _T(".")+strnum + _T(".") + strnum);
+			CString blank;
+			blank = _T("    ");
+			infofile.WriteString(blank+_T("*")+str_newid + _T(".")+str_newpw+_T(".")+strnum+_T(".")+ strnum + _T(".") + strnum + _T(".")+strnum + _T(".") + strnum);
 			MessageBox(_T("회원가입 완료"));
 			infofile.Close();
 		}
