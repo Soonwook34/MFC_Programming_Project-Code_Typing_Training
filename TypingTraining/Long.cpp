@@ -513,6 +513,7 @@ BOOL CLong::OnInitDialog()
 		AfxMessageBox(timer);
 		m_pMain->m_letter_rsum += correctChar;
 		m_pMain->m_letter_sum += totalChar;
+		m_pMain->m_typenum.Add(totalSpeed);
 		DestroyWindow();
 		return;
 	}

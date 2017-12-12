@@ -62,7 +62,12 @@ void CLogin::OnBnClickedGoMain()
 	}
 	//written_str.Replace(_T("\r\n"), _T(" "));
 	int n = written_str.Find(input_str);
+	CString l;
+	l.Format(_T("%d"), n);
+	MessageBox(l);
 	if (input_str == _T("."))
+		MessageBox(_T("로그인 실패"));
+	else if (str_pw == _T(""))
 		MessageBox(_T("로그인 실패"));
 	else if (n >= 0) {
 		MessageBox(_T("로그인 성공"));
