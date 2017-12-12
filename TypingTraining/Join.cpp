@@ -86,9 +86,9 @@ void CJoin::OnOK()
 			CString strnum;
 			int num = 0;
 			strnum.Format(_T("%d"), num);
-			CString blank;
-			blank = _T("    ");
-			infofile.WriteString(blank+_T("*")+str_newid + _T(".")+str_newpw+_T(".")+strnum+_T(".")+ strnum + _T(".") + strnum + _T(".")+strnum + _T(".") + strnum);
+			//CString blank;
+			//blank = _T("    ");
+			infofile.WriteString(_T("*")+str_newid + _T(".")+str_newpw+_T(".")+strnum+_T(".")+ strnum + _T(".") + strnum + _T(".")+strnum + _T(".") + strnum);
 			MessageBox(_T("회원가입 완료"));
 			infofile.Close();
 		}
@@ -114,7 +114,7 @@ void CJoin::OnBnClickedIsexist()
 		checkid +=_T(".");
 		//MessageBox(checkid);
 		int n = written_str.Find(checkid);
-		if (n < 0) {
+		if (n < 0 || str==_T("")) {
 			MessageBox(_T("사용가능한 아이디입니다."));
 			//m_edit_newpw.SetFocus();
 		}
