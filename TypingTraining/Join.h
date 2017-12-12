@@ -33,4 +33,6 @@ public:
 	afx_msg void OnBnClickedIsexist();
 	afx_msg void OnEnUpdateNewid();
 	afx_msg void OnEnUpdateNewpw();
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
+	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 };

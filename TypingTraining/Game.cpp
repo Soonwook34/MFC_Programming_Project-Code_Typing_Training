@@ -246,6 +246,8 @@ void CGame::OnPaint()
 
 		m_pMain->m_game_sum += count;
 		m_pMain->m_game_rsum += rate;
+		m_pMain->m_static_count++;
+		m_pMain->m_game_count++;
 
 		//::SendMessage(this->m_hWnd, WM_CLOSE, NULL, NULL);	//에러
 		//OnClose();		//나가지지 않고 에러
