@@ -31,12 +31,17 @@ void CLogin::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_ID, m_edit_id);
 	DDX_Control(pDX, IDC_PW, m_edit_pw);
 	DDX_Control(pDX, IDC_JOIN, m_join);
+	DDX_Control(pDX, IDC_NAME, m_name);
+	DDX_Control(pDX, IDC_LOGIN1, m_id);
+	DDX_Control(pDX, IDC_LOGIN2, m_pw);
 }
 
 
 BEGIN_MESSAGE_MAP(CLogin, CDialog)
 	ON_BN_CLICKED(IDC_GO_MAIN, &CLogin::OnBnClickedGoMain)
 	ON_BN_CLICKED(IDC_JOIN, &CLogin::OnBnClickedJoin)
+	ON_WM_CTLCOLOR()
+	ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
 
@@ -99,4 +104,57 @@ void CLogin::OnBnClickedJoin()
 	CJoin join;
 	join.DoModal();
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+HBRUSH CLogin::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	HBRUSH hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);
+
+	// TODO:  여기서 DC의 특성을 변경합니다.
+	switch (nCtlColor) {
+	case CTLCOLOR_DLG:
+		return (HBRUSH)GetStockObject(BLACK_BRUSH);
+		break;
+	case CTLCOLOR_BTN:
+		pDC->SetBkMode(BLACK_BRUSH);
+		return (HBRUSH)GetStockObject(BLACK_BRUSH);
+		break;
+	case CTLCOLOR_STATIC:
+	case CTLCOLOR_EDIT:
+		pDC->SetTextColor(RGB(255, 255, 200));
+		pDC->SetBkColor(BLACK_BRUSH);
+		return (HBRUSH)GetStockObject(BLACK_BRUSH);
+		break;
+	}
+	// TODO:  기본값이 적당하지 않으면 다른 브러시를 반환합니다.
+	return hbr;
+}
+
+
+BOOL CLogin::OnEraseBkgnd(CDC* pDC)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+	CRect rect;
+	GetClientRect(rect);
+	pDC->FillSolidRect(rect, RGB(0, 0, 0));
+	return CDialog::OnEraseBkgnd(pDC);
+}
+
+ 
+BOOL CLogin::OnInitDialog()
+{
+	CDialog::OnInitDialog();
+
+	// TODO:  여기에 추가 초기화 작업을 추가합니다.
+	CFont font1, font2;
+	font1.CreatePointFont(200, _T("Consolas"));
+	font2.CreatePointFont(150, _T("Consolas"));
+	m_name.SetFont(&font1);
+	m_id.SetFont(&font2);
+	m_pw.SetFont(&font2);
+	font1.Detach();
+	font2.Detach();
+	return TRUE;  // return TRUE unless you set the focus to a control
+				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }

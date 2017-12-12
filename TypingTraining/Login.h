@@ -31,4 +31,10 @@ public:
 	CEdit m_edit_pw;
 	CButton m_join;
 	afx_msg void OnBnClickedJoin();
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
+	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+	CStatic m_name;
+	CStatic m_id;
+	CStatic m_pw;
+	virtual BOOL OnInitDialog();
 };

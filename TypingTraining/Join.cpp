@@ -43,6 +43,8 @@ BEGIN_MESSAGE_MAP(CJoin, CDialog)
 	ON_BN_CLICKED(IDC_ISEXIST, &CJoin::OnBnClickedIsexist)
 	ON_EN_UPDATE(IDC_NewID, &CJoin::OnEnUpdateNewid)
 	ON_EN_UPDATE(IDC_NewPW, &CJoin::OnEnUpdateNewpw)
+	ON_WM_CTLCOLOR()
+	ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
 
@@ -182,4 +184,39 @@ void CJoin::OnEnUpdateNewpw()
 	m_edit_newid.SetSel(0, -1);
 	m_edit_newid.SetSel(-1, -1);
 	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+HBRUSH CJoin::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	HBRUSH hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);
+
+	// TODO:  여기서 DC의 특성을 변경합니다.
+	switch (nCtlColor) {
+	case CTLCOLOR_DLG:
+		return (HBRUSH)GetStockObject(BLACK_BRUSH);
+		break;
+	case CTLCOLOR_BTN:
+		pDC->SetBkMode(BLACK_BRUSH);
+		return (HBRUSH)GetStockObject(BLACK_BRUSH);
+		break;
+	case CTLCOLOR_STATIC:
+	case CTLCOLOR_EDIT:
+		pDC->SetTextColor(RGB(255, 255, 200));
+		pDC->SetBkColor(BLACK_BRUSH);
+		return (HBRUSH)GetStockObject(BLACK_BRUSH);
+		break;
+	}
+	// TODO:  기본값이 적당하지 않으면 다른 브러시를 반환합니다.
+	return hbr;
+}
+
+
+BOOL CJoin::OnEraseBkgnd(CDC* pDC)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+	CRect rect;
+	GetClientRect(rect);
+	pDC->FillSolidRect(rect, RGB(0, 0, 0));
+	return CDialog::OnEraseBkgnd(pDC);
 }
