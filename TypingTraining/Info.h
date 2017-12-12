@@ -18,7 +18,17 @@ public:
 	CArray <int, int> typenum;
 	int letter_sum;
 	int letter_rsum;
-
+	
+	int static_count;
+	int practice_count;
+	int game_count;
+	
+	int count;
+	int average;
+	int ls, lrs, gs, grs;
+	int f_average;
+	int f_accuracy;
+	int f_exact;
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_STATIC };
@@ -41,4 +51,6 @@ public:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnPaint();
 	afx_msg void OnBnClickedDropout();
+	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 };

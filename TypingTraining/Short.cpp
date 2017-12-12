@@ -49,6 +49,8 @@ BEGIN_MESSAGE_MAP(CShort, CDialog)
 	ON_EN_CHANGE(IDC_COPY1, &CShort::OnEnChangeCopy1)
 	ON_WM_TIMER()
 	ON_WM_PAINT()
+	ON_WM_CTLCOLOR()
+	ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
 
@@ -506,7 +508,7 @@ void CShort::OnEnChangeCopy1()
 	bspace = FALSE;
 	first = FALSE;
 
-	Invalidate();
+	Invalidate(1);
 }
 
 
@@ -529,35 +531,6 @@ void CShort::OnTimer(UINT_PTR nIDEvent)
 
 void CShort::OnPaint()
 {
-	/*
-	CPaintDC dc(this); // device context for painting
-					   // TODO: 여기에 메시지 처리기 코드를 추가합니다.
-					   // 그리기 메시지에 대해서는 CDialog::OnPaint()을(를) 호출하지 마십시오.
-	CRect rect;
-	GetWindowRect(&rect);
-	ScreenToClient(&rect);
-	CDC* pDC = GetDC();
-	COLORREF red = RGB(255, 50, 25), blue = RGB(50, 25, 255), black = RGB(0, 0, 0);
-	CPoint point = CPoint(35, 150);
-	CFont font;
-	font.CreatePointFont(120, _T("Consolas"));
-
-	CString tmp;
-
-	pDC->SelectObject(&font);
-
-	for (int i = 0; i < str1.GetLength(); i++) {
-		tmp.Format(_T("%c"), str1[i]);
-		if (col[i] == 1)
-			pDC->SetTextColor(blue);
-		else if (col[i] == 0)
-			pDC->SetTextColor(red);
-		else
-			pDC->SetTextColor(black);
-		pDC->TextOut(point.x, point.y, tmp);
-		point.x += 11;
-	}
-	*/
 
 	CPaintDC dc(this); // device context for painting
 					   // TODO: 여기에 메시지 처리기 코드를 추가합니다.
@@ -568,15 +541,19 @@ void CShort::OnPaint()
 	pDC->SetMapMode(MM_ANISOTROPIC);
 	pDC->SetWindowExt(752, 480);
 	pDC->SetViewportExt(rect.Width(), rect.Height());
-	COLORREF red = RGB(255, 50, 25), blue = RGB(50, 25, 255), black = RGB(0, 0, 0);
-	CPoint point = CPoint(31, 135);
+	COLORREF red = RGB(225, 100, 100), blue = RGB(150, 175, 100), white = RGB(255, 225, 200);
+	CPoint point = CPoint(31, 125);
 	CFont font;
 	//font.CreatePointFont(120, _T("Consolas"));
 	font.CreateFont(19, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Consolas"));
 
 	CString tmp;
 
+	pDC->SetBkColor(RGB(0, 0, 0));
+	pDC->SetTextColor(RGB(255, 225, 200));
+
 	pDC->SelectObject(&font);
+
 
 	for (int i = 0; i < str1.GetLength(); i++) {
 		tmp.Format(_T("%c"), str1[i]);
@@ -585,8 +562,38 @@ void CShort::OnPaint()
 		else if (col[i] == 0)
 			pDC->SetTextColor(red);
 		else
-			pDC->SetTextColor(black);
+			pDC->SetTextColor(white);
 		pDC->TextOut(point.x, point.y, tmp);
 		point.x += 9;
 	}
+}
+
+
+HBRUSH CShort::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	HBRUSH hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);
+
+	// TODO:  여기서 DC의 특성을 변경합니다.
+	switch (nCtlColor) {
+	case CTLCOLOR_STATIC:
+	case CTLCOLOR_EDIT:
+		pDC->SetTextColor(RGB(255, 225, 200));
+		pDC->SetBkMode(BLACK_BRUSH);
+		pDC->SetBkColor(RGB(0, 0, 0));
+		return (HBRUSH)GetStockObject(BLACK_BRUSH);
+	}
+	// TODO:  기본값이 적당하지 않으면 다른 브러시를 반환합니다.
+	return hbr;
+}
+
+
+BOOL CShort::OnEraseBkgnd(CDC* pDC)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+	CRect rect;
+	GetClientRect(rect);
+	pDC->FillSolidRect(rect, RGB(0, 0, 0));
+
+	return TRUE;
+	//return CDialog::OnEraseBkgnd(pDC);
 }
