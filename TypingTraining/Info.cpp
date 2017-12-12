@@ -167,7 +167,7 @@ BOOL CInfo::OnInitDialog()
 					typenum_sum += typenum.GetAt(i);
 			}
 
-			if (count <= 10)
+			if (count <= 10 && count != 0)
 				average = typenum_sum / count;
 			else
 				average = typenum_sum / 10;

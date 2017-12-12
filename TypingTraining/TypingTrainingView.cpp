@@ -178,8 +178,6 @@ void CTypingTrainingView::OnDraw(CDC* pDC)
 		break;
 	case IDD_SHORT:
 		if (m_pShort == NULL) {
-			m_static_count++;
-			m_practice_count++;
 			m_pShort = new CShort(this);
 			m_pShort->Create(IDD_SHORT, this);
 			m_pShort->ShowWindow(SW_SHOW);
@@ -187,8 +185,6 @@ void CTypingTrainingView::OnDraw(CDC* pDC)
 		break;
 	case IDD_LONG:
 		if (m_pLong == NULL) {
-			m_static_count++;
-			m_practice_count++;
 			m_pLong = new CLong(this);
 			m_pLong->Create(IDD_LONG, this);
 			m_pLong->ShowWindow(SW_SHOW);
@@ -196,8 +192,6 @@ void CTypingTrainingView::OnDraw(CDC* pDC)
 		break;
 	case IDD_GAME:
 		if (m_pGame == NULL) {
-			m_static_count++;
-			m_game_count++;
 			m_pGame = new CGame(this);
 			m_pGame->Create(IDD_GAME, this);
 			m_pGame->ShowWindow(SW_SHOW);

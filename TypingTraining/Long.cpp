@@ -8,6 +8,7 @@
 #include "TypingTrainingDoc.h"
 #include "TypingTrainingView.h"
 #include "LongList.h"
+#include <locale.h>
 
 
 // CLong 대화 상자입니다.
@@ -68,6 +69,8 @@ BEGIN_MESSAGE_MAP(CLong, CDialog)
 	ON_EN_CHANGE(IDC_EDIT5, &CLong::OnEnChangeEdit5)
 	ON_WM_TIMER()
 	ON_WM_CTLCOLOR()
+	ON_WM_DRAWITEM()
+	ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
 
@@ -106,11 +109,10 @@ void CLong::OnPaint()
 	CFont font, font2;
 	CString c, cc;
 	int i, j, k, strNum;
-
-	font.CreateFont(18, 9, 0, 0, 0/*FW_BOLD*/, 0, 0, 0, 0, 0, 0, 0, 0, _T("Consolas"));
-	font2.CreateFont(18, 6, 0, 0, 0/*FW_BOLD*/, 0, 0, 0, 0, 0, 0, 0, 0, _T("Consolas"));
+	font.CreateFont(18, 9, 0, 0, FW_BOLD, 0, 0, 0, 0, 0, 0, 0, 0, _T("Consolas"));
+	font2.CreateFont(18, 6, 0, 0, FW_BOLD, 0, 0, 0, 0, 0, 0, 0, 0, _T("Consolas"));
 	dc.SelectObject(&font);
-	dc.SetBkColor(RGB(0, 0, 0));
+	dc.SetBkColor(RGB(38, 38, 38));
 	CPoint point(31, 135);
 	dc.TextOut(point.x, point.y, _T("asdf"));
 	strNum = (curPage - 1) * 5;
@@ -515,6 +517,8 @@ BOOL CLong::OnInitDialog()
 		m_pMain->m_letter_rsum += correctChar;
 		m_pMain->m_letter_sum += totalChar;
 		m_pMain->m_typenum.Add(totalSpeed);
+		m_pMain->m_static_count++;
+		m_pMain->m_practice_count++;
 		DestroyWindow();
 		return;
 	}
@@ -570,10 +574,6 @@ BOOL CLong::OnInitDialog()
 		case CTLCOLOR_DLG:
 			return (HBRUSH)GetStockObject(BLACK_BRUSH);
 			break;
-		case CTLCOLOR_BTN:
-			pDC->SetBkMode(BLACK_BRUSH);
-			return (HBRUSH)GetStockObject(BLACK_BRUSH);
-			break;
 		case CTLCOLOR_STATIC:
 		case CTLCOLOR_EDIT:
 			pDC->SetTextColor(RGB(255, 225, 200));
@@ -583,4 +583,37 @@ BOOL CLong::OnInitDialog()
 		}
 		// TODO:  기본값이 적당하지 않으면 다른 브러시를 반환합니다.
 		return hbr;
+	}
+
+
+	void CLong::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
+	{
+		// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+		if ((nIDCtl == IDC_GO_BACK))
+		{
+			CDC dc;
+			RECT rect;
+			dc.Attach(lpDrawItemStruct->hDC);                //버튼의 dc구하기
+			rect = lpDrawItemStruct->rcItem;                   //버튼영역 구하기
+			dc.Draw3dRect(&rect, RGB(255, 255, 255), RGB(0, 0, 0));  //버튼의 외각선 그리기
+			dc.FillSolidRect(&rect, RGB(38, 38, 38));             //버튼색상
+			UINT state = lpDrawItemStruct->itemState;         //버튼상태구하기
+			if ((state &ODS_SELECTED))
+			{
+				dc.DrawEdge(&rect, EDGE_SUNKEN, BF_RECT);
+			}
+			else
+			{
+				dc.DrawEdge(&rect, EDGE_RAISED, BF_RECT);
+			}
+			setlocale(LC_ALL,"");
+			dc.SetBkColor(RGB(38, 38, 38));                       //text의 백그라운드 색상
+			dc.SetTextColor(RGB(255, 255, 255));                     //texttort
+			TCHAR buffer[MAX_PATH];                            //버튼의 text를 얻기위한 임시버퍼
+			ZeroMemory(buffer, MAX_PATH);                       //버퍼초기화
+			::GetWindowText(lpDrawItemStruct->hwndItem, buffer, MAX_PATH); //버튼의 text얻기
+			dc.DrawText(buffer, &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE); //버튼의 text넣기
+			dc.Detach();                                                  //버튼의 dc 풀어주기
+		}
+		//CDialog::OnDrawItem(nIDCtl, lpDrawItemStruct);
 	}

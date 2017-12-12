@@ -278,6 +278,8 @@ void CShort::OnEnMaxtextCopy1()
 		m_pMain->m_typenum.Add(avgtyping);
 		m_pMain->m_letter_sum += ch_allnum;
 		m_pMain->m_letter_rsum += ch_allnum2;
+		m_pMain->m_static_count++;
+		m_pMain->m_practice_count++;
 
 		MessageBox(end, _T("ÂªÀº ±Û ¿¬½À"), MB_ICONINFORMATION);
 		DestroyWindow();
@@ -426,6 +428,8 @@ BOOL CShort::PreTranslateMessage(MSG* pMsg)
 		m_pMain->m_typenum.Add(avgtyping);
 		m_pMain->m_letter_sum += ch_allnum;
 		m_pMain->m_letter_rsum += ch_allnum2;
+		m_pMain->m_static_count++;
+		m_pMain->m_practice_count++;
 
 		MessageBox(end, _T("ÂªÀº ±Û ¿¬½À"), MB_ICONINFORMATION);
 		DestroyWindow();
@@ -508,7 +512,7 @@ void CShort::OnEnChangeCopy1()
 	bspace = FALSE;
 	first = FALSE;
 
-	Invalidate(1);
+	Invalidate(0);
 }
 
 
