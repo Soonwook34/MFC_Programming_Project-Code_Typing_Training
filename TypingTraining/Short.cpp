@@ -20,6 +20,7 @@ IMPLEMENT_DYNAMIC(CShort, CDialog)
 CShort::CShort(CWnd* pParent /*=NULL*/)
 	: CDialog(IDD_SHORT, pParent)
 {
+
 	m_pMain = (CTypingTrainingView*)pParent;
 }
 
