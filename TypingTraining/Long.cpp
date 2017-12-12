@@ -580,6 +580,11 @@ BOOL CLong::OnInitDialog()
 		HBRUSH hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);
 
 		// TODO:  여기서 DC의 특성을 변경합니다.
+		if (pWnd->GetDlgCtrlID() == IDC_FILENAME)
+		{
+			pDC->SetTextColor(RGB(255, 225, 200));
+			return hbr;
+		}
 		switch (nCtlColor) {
 		case CTLCOLOR_DLG:
 			return (HBRUSH)GetStockObject(BLACK_BRUSH);
