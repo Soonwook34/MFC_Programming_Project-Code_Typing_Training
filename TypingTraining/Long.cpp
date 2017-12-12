@@ -112,7 +112,7 @@ void CLong::OnPaint()
 	font.CreateFont(18, 9, 0, 0, FW_BOLD, 0, 0, 0, 0, 0, 0, 0, 0, _T("Consolas"));
 	font2.CreateFont(18, 6, 0, 0, FW_BOLD, 0, 0, 0, 0, 0, 0, 0, 0, _T("Consolas"));
 	dc.SelectObject(&font);
-	dc.SetBkColor(RGB(38, 38, 38));
+	dc.SetBkColor(RGB(0, 0, 0));
 	CPoint point(31, 135);
 	dc.TextOut(point.x, point.y, _T("asdf"));
 	strNum = (curPage - 1) * 5;
@@ -128,7 +128,7 @@ void CLong::OnPaint()
 			if (0 >= c.GetAt(0) || 127 < c.GetAt(0)) {
 				dc.SelectObject(&font2);
 				dc.TextOut(point.x, point.y, c);
-				point.x += 12;
+				point.x += 13;
 			}
 			else {
 				dc.SelectObject(&font);
