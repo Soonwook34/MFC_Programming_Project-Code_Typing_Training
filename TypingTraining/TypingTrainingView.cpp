@@ -104,7 +104,7 @@ void CTypingTrainingView::OnInitialUpdate()
 	m_main.SetFont(&font);
 	font.Detach();
 
-	font2.CreatePointFont(150, _T("±Ã¼­"));
+	font2.CreatePointFont(150, _T("Consolas"));
 	m_explain.SetFont(&font2);
 	font2.Detach();
 
