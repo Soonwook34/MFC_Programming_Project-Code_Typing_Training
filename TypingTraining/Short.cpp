@@ -258,6 +258,9 @@ void CShort::OnEnMaxtextCopy1()
 		temp.Format(_T("%d"), best);
 		m_best.SetWindowText(temp);
 	}
+	CDC *pDC = GetDC();
+	pDC->SelectStockObject(BLACK_BRUSH);
+	pDC->Rectangle(35, 125, 650, 150);
 
 	avgtyping += besttemp;
 
@@ -390,6 +393,9 @@ BOOL CShort::PreTranslateMessage(MSG* pMsg)
 				m_best.SetWindowText(temp);
 			}
 			avgtyping += besttemp;
+			CDC *pDC = GetDC();
+			pDC->SelectStockObject(BLACK_BRUSH);
+			pDC->Rectangle(35, 125, 650, 145);
 		}
 
 		else if (pMsg->wParam == VK_BACK) {
