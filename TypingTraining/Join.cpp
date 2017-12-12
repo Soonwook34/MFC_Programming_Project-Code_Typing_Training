@@ -105,9 +105,11 @@ void CJoin::OnBnClickedIsexist()
 	
 	CStdioFile infofile;
 	CString written_str, str;
-	if (infofile.Open(_T("typinguserinfo.txt"), CFile::modeRead | CFile::typeText)){
+	if (infofile.Open(_T("typinguserinfo.txt"),CFile::modeCreate|CFile::modeNoTruncate| CFile::modeRead | CFile::typeText)){
 		while (infofile.ReadString(str))
 			written_str += str;
+		//if (written_str == _T(""))
+		//	MessageBox(_T("사용가능한 아이디입니다."));
 		CString checkid;
 		checkid += _T("*");
 		checkid += str_newid;
