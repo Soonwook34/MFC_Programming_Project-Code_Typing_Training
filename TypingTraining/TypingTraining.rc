@@ -93,13 +93,13 @@ BEGIN
     BUTTON      ID_FILE_NEW
     BUTTON      ID_FILE_OPEN
     BUTTON      ID_FILE_SAVE
-    SEPARATOR
     BUTTON      ID_EDIT_CUT
+    BUTTON      ID_BUTTON32776
     BUTTON      ID_EDIT_COPY
     BUTTON      ID_EDIT_PASTE
-    SEPARATOR
     BUTTON      ID_FILE_PRINT
     BUTTON      ID_APP_ABOUT
+    BUTTON      ID_BUTTON32777
 END
 
 
@@ -110,29 +110,13 @@ END
 
 IDR_MAINFRAME MENU
 BEGIN
-    POPUP "파일(&F)"
+    POPUP "기능 이동"
     BEGIN
-        MENUITEM "새로 만들기(&N)\tCtrl+N",          ID_FILE_NEW
-        MENUITEM "열기(&O)...\tCtrl+O",           ID_FILE_OPEN
-        MENUITEM "저장(&S)\tCtrl+S",              ID_FILE_SAVE
-        MENUITEM "다른 이름으로 저장(&A)...",           ID_FILE_SAVE_AS
-        MENUITEM SEPARATOR
-        MENUITEM "최근에 사용한 파일",                  ID_FILE_MRU_FILE1, GRAYED
-        MENUITEM SEPARATOR
-        MENUITEM "끝내기(&X)",                     ID_APP_EXIT
-    END
-    POPUP "편집(&E)"
-    BEGIN
-        MENUITEM "실행 취소(&U)\tCtrl+Z",           ID_EDIT_UNDO
-        MENUITEM SEPARATOR
-        MENUITEM "잘라내기(&T)\tCtrl+X",            ID_EDIT_CUT
-        MENUITEM "복사(&C)\tCtrl+C",              ID_EDIT_COPY
-        MENUITEM "붙여넣기(&P)\tCtrl+V",            ID_EDIT_PASTE
-    END
-    POPUP "보기(&V)"
-    BEGIN
-        MENUITEM "도구 모음(&T)",                   ID_VIEW_TOOLBAR
-        MENUITEM "상태 표시줄(&S)",                  ID_VIEW_STATUS_BAR
+        MENUITEM "긴 코드",                        ID_32771
+        MENUITEM "짧은 코드",                       ID_32772
+        MENUITEM "게임",                          ID_32773
+        MENUITEM "통계",                          ID_32774
+        MENUITEM "뒤로가기",                        ID_32775, INACTIVE
     END
     POPUP "도움말(&H)"
     BEGIN
@@ -256,13 +240,13 @@ IDD_LOGIN DIALOGEX 0, 0, 334, 202
 STYLE DS_SETFONT | WS_CHILD
 FONT 12, "Consolas", 400, 0, 0x0
 BEGIN
-    EDITTEXT        IDC_ID,130,52,95,12,ES_AUTOHSCROLL
-    EDITTEXT        IDC_PW,130,84,95,12,ES_PASSWORD | ES_AUTOHSCROLL
-    DEFPUSHBUTTON   "START",IDC_GO_MAIN,169,123,50,14
-    CTEXT           "Typing Traning",IDC_NAME,108,18,120,26,SS_CENTERIMAGE
-    CTEXT           "ID",IDC_LOGIN1,78,53,48,22
-    CTEXT           "PW",IDC_LOGIN2,80,86,45,26
-    PUSHBUTTON      "JOIN",IDC_JOIN,110,124,50,14,NOT WS_TABSTOP
+    EDITTEXT        IDC_ID,130,66,95,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_PW,130,98,95,12,ES_PASSWORD | ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "START",IDC_GO_MAIN,162,138,54,18
+    CTEXT           "Typing Traning",IDC_NAME,107,30,120,26,SS_CENTERIMAGE
+    CTEXT           "ID",IDC_LOGIN1,78,67,48,22
+    CTEXT           "PW",IDC_LOGIN2,80,100,45,26
+    PUSHBUTTON      "JOIN",IDC_JOIN,108,138,42,18,NOT WS_TABSTOP
 END
 
 IDD_STATIC DIALOGEX 0, 0, 334, 202
@@ -488,10 +472,7 @@ END
 
 STRINGTABLE
 BEGIN
-    ID_FILE_NEW             "새 문서를 만듭니다.\n새로 만들기"
-    ID_FILE_OPEN            "기존 문서를 엽니다.\n열기"
     ID_FILE_CLOSE           "활성 문서를 닫습니다.\n닫기"
-    ID_FILE_SAVE            "활성 문서를 저장합니다.\n저장"
     ID_FILE_SAVE_AS         "활성 문서를 새 이름으로 저장합니다.\n다른 이름으로 저장"
 END
 
@@ -536,10 +517,7 @@ STRINGTABLE
 BEGIN
     ID_EDIT_CLEAR           "선택 영역을 지웁니다.\n지우기"
     ID_EDIT_CLEAR_ALL       "모두 지웁니다.\n모두 지우기"
-    ID_EDIT_COPY            "선택 영역을 복사하여 클립보드에 넣습니다.\n복사"
-    ID_EDIT_CUT             "선택 영역을 잘라내어 클립보드에 넣습니다.\n잘라내기"
     ID_EDIT_FIND            "지정한 텍스트를 찾습니다.\n찾기"
-    ID_EDIT_PASTE           "클립보드 내용을 삽입합니다.\n붙여넣기"
     ID_EDIT_REPEAT          "마지막 작업을 반복합니다.\n반복"
     ID_EDIT_REPLACE         "특정 텍스트를 다른 텍스트로 바꿉니다.\n바꾸기"
     ID_EDIT_SELECT_ALL      "전체 문서를 선택합니다.\n모두 선택"
