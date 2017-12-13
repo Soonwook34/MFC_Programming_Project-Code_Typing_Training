@@ -416,6 +416,7 @@ BOOL CShort::PreTranslateMessage(MSG* pMsg)
 		else if (pMsg->wParam == VK_RIGHT)
 			return TRUE;
 		else if (pMsg->wParam == VK_ESCAPE) {
+			AfxMessageBox(_T("짧은 코드 연습을 종료합니다.\n(지금까지의 기록은 통계에 기록되지 않습니다)"));
 			OnBnClickedGoBack();
 			return TRUE;
 		}

@@ -342,3 +342,14 @@ HBRUSH CGame::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	// TODO:  기본값이 적당하지 않으면 다른 브러시를 반환합니다.
 	return hbr;
 }
+
+
+BOOL CGame::PreTranslateMessage(MSG* pMsg)
+{
+	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
+	switch (pMsg->wParam) {
+	case VK_ESCAPE:
+		return TRUE;
+	}
+	return CDialog::PreTranslateMessage(pMsg);
+}
