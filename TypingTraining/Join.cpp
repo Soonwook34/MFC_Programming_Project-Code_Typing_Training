@@ -116,7 +116,7 @@ void CJoin::OnBnClickedIsexist()
 		checkid +=_T(".");
 		//MessageBox(checkid);
 		int n = written_str.Find(checkid);
-		if (n < 0 || str==_T("")) {
+		if (n < 0) {
 			MessageBox(_T("사용가능한 아이디입니다."));
 			//m_edit_newpw.SetFocus();
 		}

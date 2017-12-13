@@ -51,4 +51,5 @@ public:
 	CString m_str;
 	CButton m_enter;
 	CInfo info;
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };
